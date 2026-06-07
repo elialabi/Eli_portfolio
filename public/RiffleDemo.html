@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Riffle — Powered by Eddy</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ocean:   #0085C7;
+  --sky:     #56CCF2;
+  --teal:    #06D6A0;
+  --coral:   #FF6B6B;
+  --yellow:  #FFD23F;
+  --white:   #FAFAFA;
+  --bg:      #F0F8FF;
+  --glass:   rgba(255,255,255,0.75);
+  --border:  rgba(0,133,199,0.15);
+  --dark:    #0D2137;
+  --muted:   #5B8DB8;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Background water effect */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(86,204,242,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(0,133,199,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(6,214,160,0.08) 0%, transparent 40%);
+}
+
+/* ── Header ── */
+.header {
+  position: fixed; top:0; left:0; right:0; height:52px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; z-index:100;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 10px;
+}
+
+.logo-eddy {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--sky);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+
+.logo-eddy::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--ocean);
+  border-radius: 50%;
+  transform: scale(0.7);
+}
+
+.logo-name {
+  font-size: 18px; font-weight: 700; color: var(--ocean);
+  letter-spacing: -0.02em;
+}
+
+.view-toggle {
+  display: flex; gap: 4px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 3px;
+}
+
+.view-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 12px; border: none; border-radius: 5px;
+  cursor: pointer; transition: all 0.2s; color: var(--muted); background: none;
+}
+
+.view-btn.active { background: var(--ocean); color: white; }
+
+/* ── Main layout ── */
+.main {
+  position: fixed; top:52px; left:0; right:0; bottom:0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  transition: all 0.4s ease;
+  z-index: 1;
+}
+
+.main.teacher-focus { grid-template-columns: 0.4fr 1fr; }
+.main.student-focus { grid-template-columns: 1fr 0.4fr; }
+
+/* ── Student Panel ── */
+.student-panel {
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transition: all 0.4s;
+}
+
+.panel-label {
+  padding: 10px 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted); border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.5);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.panel-dot { width:6px; height:6px; border-radius:50%; }
+
+/* Lesson progress */
+.lesson-progress {
+  padding: 12px 20px;
+  background: rgba(255,255,255,0.6);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.progress-step {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  color: var(--muted); cursor: pointer; transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.progress-step.done { background: var(--teal); border-color: var(--teal); color: white; }
+.progress-step.active { background: var(--ocean); border-color: var(--ocean); color: white; }
+.progress-step.stuck-here { border-color: var(--coral); color: var(--coral); }
+.progress-bar-line { flex:1; height:2px; background: var(--border); border-radius:2px; }
+.progress-bar-line.done { background: var(--teal); }
+
+/* Lesson content area */
+.lesson-area {
+  flex: 1; overflow-y: auto;
+  padding: 16px 20px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+/* Eddy message */
+.eddy-msg {
+  display: flex; gap: 10px; align-items: flex-start;
+}
+
+.eddy-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--sky); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(86,204,242,0.4);
+}
+
+.eddy-avatar::after {
+  content: '';
+  position: absolute; inset: 4px;
+  background: var(--ocean); border-radius: 50%;
+}
+
+.eddy-bubble {
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 0 12px 12px 12px;
+  padding: 12px 14px;
+  font-size: 13px; line-height: 1.6; color: var(--dark);
+  max-width: 85%;
+  animation: bubbleIn 0.3s ease;
+}
+
+@keyframes bubbleIn {
+  from { opacity:0; transform: translateY(6px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* Binary widget */
+.binary-widget {
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-left: 46px;
+}
+
+.binary-cols {
+  display: flex; gap: 8px; justify-content: center;
+  margin-bottom: 10px;
+}
+
+.b-col {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+
+.b-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.b-chip {
+  width: 44px; height: 44px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s; border: 2px solid transparent;
+  user-select: none;
+}
+
+.b-chip.one  { background: var(--teal); color: white; }
+.b-chip.zero { background: #E8F4FD; color: var(--ocean); border-color: var(--border); }
+.b-chip:hover { transform: scale(1.06); }
+
+.b-total {
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px; color: var(--ocean); font-weight: 500;
+}
+
+/* Student input */
+.student-input-wrap {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  background: rgba(255,255,255,0.7);
+  display: flex; gap: 8px;
+}
+
+.stuck-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 8px 14px; border: 1.5px solid var(--coral);
+  background: none; color: var(--coral); border-radius: 6px;
+  cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+}
+.stuck-btn:hover { background: var(--coral); color: white; }
+
+.student-next {
+  flex: 1; padding: 8px 14px;
+  background: var(--ocean); color: white; border: none;
+  border-radius: 6px; font-family: 'Syne', sans-serif;
+  font-size: 12px; font-weight: 500; cursor: pointer;
+  transition: all 0.2s;
+}
+.student-next:hover { background: #0070A8; }
+
+/* Stuck modal */
+.stuck-overlay {
+  position: absolute; inset:0;
+  background: rgba(13,33,55,0.4);
+  backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center;
+  z-index: 50;
+}
+.stuck-overlay.show { display: flex; animation: fadeIn 0.2s ease; }
+
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+.stuck-modal {
+  background: white; border-radius: 16px;
+  padding: 24px; width: 340px;
+  box-shadow: 0 20px 60px -12px rgba(0,133,199,0.25);
+}
+
+.stuck-modal h3 {
+  font-size: 15px; color: var(--dark); margin-bottom: 6px;
+}
+
+.stuck-modal p {
+  font-size: 11px; color: var(--muted); margin-bottom: 14px; line-height: 1.6;
+}
+
+.stuck-chips {
+  display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px;
+}
+
+.stuck-chip {
+  padding: 9px 12px; border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: 12px; color: var(--dark);
+  cursor: pointer; transition: all 0.2s;
+}
+.stuck-chip:hover { border-color: var(--ocean); background: #EBF7FF; }
+.stuck-chip.selected { border-color: var(--ocean); background: #EBF7FF; color: var(--ocean); }
+
+.stuck-text {
+  width: 100%; padding: 9px 12px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'Syne', sans-serif; font-size: 12px; color: var(--dark);
+  outline: none; resize: none; min-height: 60px; margin-bottom: 12px;
+}
+.stuck-text:focus { border-color: var(--ocean); }
+
+.stuck-submit {
+  width: 100%; padding: 10px;
+  background: var(--ocean); color: white; border: none;
+  border-radius: 8px; font-family: 'Syne', sans-serif;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+
+/* ── Teacher Panel ── */
+.teacher-panel {
+  display: flex; flex-direction: column; overflow: hidden;
+  background: rgba(255,255,255,0.3);
+}
+
+.teacher-inner {
+  flex:1; overflow-y: auto;
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+/* KPI row */
+.kpi-row {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 8px;
+}
+
+.kpi-card {
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px;
+}
+
+.kpi-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 5px;
+}
+
+.kpi-num {
+  font-size: 26px; font-weight: 700; color: var(--dark); line-height: 1;
+}
+
+.kpi-sub { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+/* Step heatmap */
+.heatmap-section {
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px;
+}
+
+.section-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px;
+}
+
+.heatmap-row {
+  display: flex; gap: 6px; align-items: center; margin-bottom: 6px;
+}
+
+.heatmap-step-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: var(--muted); width: 44px; flex-shrink: 0;
+}
+
+.heatmap-bar {
+  height: 24px; border-radius: 4px;
+  display: flex; align-items: center; padding: 0 8px;
+  font-family: 'DM Mono', monospace; font-size: 9px; color: white;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  min-width: 24px;
+}
+
+.heatmap-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: var(--muted); margin-left: 6px;
+}
+
+/* Struggle clusters */
+.clusters-section {
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px;
+}
+
+.cluster-item {
+  border-left: 3px solid var(--ocean);
+  padding: 10px 12px; margin-bottom: 8px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 0 8px 8px 0;
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from { opacity:0; transform: translateX(-8px); }
+  to   { opacity:1; transform: translateX(0); }
+}
+
+.cluster-item.new-item { border-left-color: var(--coral); }
+
+.cluster-concept {
+  font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 4px;
+}
+
+.cluster-words {
+  font-size: 11px; color: var(--muted); font-style: italic; margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+.cluster-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;
+}
+
+/* Eddy recommendation */
+.eddy-rec {
+  background: linear-gradient(135deg, rgba(0,133,199,0.08), rgba(6,214,160,0.06));
+  border: 1px solid rgba(0,133,199,0.2);
+  border-radius: 10px; padding: 14px;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+
+.rec-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--sky); flex-shrink: 0;
+  position: relative;
+}
+.rec-avatar::after {
+  content:''; position:absolute; inset:4px;
+  background: var(--ocean); border-radius: 50%;
+}
+
+.rec-text {
+  font-size: 12px; line-height: 1.6; color: var(--dark);
+}
+
+.rec-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ocean); margin-bottom: 4px;
+}
+
+/* Live feed */
+.live-feed {
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px;
+}
+
+.feed-item {
+  display: flex; gap: 8px; align-items: flex-start;
+  padding: 7px 0; border-bottom: 1px solid var(--border);
+  animation: feedIn 0.4s ease;
+}
+.feed-item:last-child { border-bottom: none; }
+
+@keyframes feedIn {
+  from { opacity:0; background: rgba(0,133,199,0.05); }
+  to   { opacity:1; background: none; }
+}
+
+.feed-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  margin-top: 5px; flex-shrink: 0;
+}
+
+.feed-content { flex:1; }
+.feed-student { font-size: 10px; font-weight: 600; color: var(--dark); }
+.feed-step { font-family:'DM Mono',monospace; font-size:8px; color:var(--muted); }
+.feed-text { font-size:11px; color:var(--dark); margin-top:2px; font-style:italic; }
+
+/* Pulse badge */
+.live-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.1em; color: var(--coral); text-transform: uppercase;
+}
+.live-pulse {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--coral);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.4; transform:scale(0.8); }
+}
+
+/* Confidence row */
+.confidence-row {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px;
+}
+.conf-pill {
+  font-family:'DM Mono',monospace; font-size:9px;
+  padding:3px 8px; border-radius:10px; color:white;
+}
+
+/* ── Highlight glow system ── */
+.glow-target {
+  animation: glowPulse 1.8s ease-in-out 3;
+  position: relative; z-index: 50;
+}
+
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 0 0 transparent; }
+  50%      { box-shadow: 0 0 0 6px var(--glow-col, rgba(0,133,199,0.4)), 0 0 24px var(--glow-col, rgba(0,133,199,0.2)); }
+}
+
+.glow-btn {
+  animation: btnPulse 1s ease-in-out 4;
+}
+
+@keyframes btnPulse {
+  0%,100% { transform: scale(1); box-shadow: none; }
+  50%      { transform: scale(1.06); box-shadow: 0 0 0 4px rgba(255,107,107,0.3); }
+}
+
+/* Eddy guide — repositionable */
+#eddy-guide {
+  transition: opacity 0.4s ease, transform 0.4s ease, left 0.5s ease, bottom 0.5s ease, right 0.5s ease;
+}
+
+/* ── Eddy Guide Tooltip ── */
+#eddy-guide {
+  position: fixed;
+  bottom: 24px; left: 24px;
+  z-index: 900;
+  display: flex; align-items: flex-end; gap: 10px;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none; max-width: 300px;
+}
+#eddy-guide.visible { opacity:1; transform:translateY(0); }
+
+.guide-face {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--sky); flex-shrink: 0;
+  position: relative; box-shadow: 0 2px 12px rgba(86,204,242,0.5);
+}
+.guide-face::after {
+  content:''; position:absolute; inset:5px;
+  background:var(--ocean); border-radius:50%;
+}
+
+.guide-bubble {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px 12px 12px 0;
+  padding: 10px 14px;
+  box-shadow: 0 8px 32px -8px rgba(0,133,199,0.2);
+  position: relative;
+}
+.guide-bubble::before {
+  content:''; position:absolute;
+  bottom:8px; left:-7px;
+  border-top:6px solid transparent;
+  border-bottom:6px solid transparent;
+  border-right:7px solid var(--border);
+}
+.guide-bubble::after {
+  content:''; position:absolute;
+  bottom:8px; left:-5px;
+  border-top:6px solid transparent;
+  border-bottom:6px solid transparent;
+  border-right:7px solid white;
+}
+
+.guide-name {
+  font-family:'DM Mono',monospace;
+  font-size:8px; letter-spacing:0.15em;
+  text-transform:uppercase; color:var(--ocean);
+  margin-bottom:4px;
+}
+.guide-msg { font-size:12px; line-height:1.6; color:var(--dark); }
+.guide-action {
+  font-family:'DM Mono',monospace;
+  font-size:9px; color:var(--ocean);
+  margin-top:6px; letter-spacing:0.05em; opacity:0.8;
+}</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">
+    <div class="logo-eddy"></div>
+    <span class="logo-name">Riffle</span>
+  </div>
+  <div class="view-toggle">
+    <button class="view-btn active" id="btn-split" onclick="setView('split')">Split View</button>
+    <button class="view-btn" id="btn-student" onclick="setView('student')">Student</button>
+    <button class="view-btn" id="btn-teacher" onclick="setView('teacher')">Teacher</button>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main" id="main">
+
+  <!-- Student Panel -->
+  <div class="student-panel" id="student-panel">
+    <div class="panel-label">
+      <div class="panel-dot" style="background:var(--sky)"></div>
+      Kayaker — Student View
+    </div>
+
+    <!-- Progress -->
+    <div class="lesson-progress" id="lesson-progress"></div>
+
+    <!-- Lesson area -->
+    <div class="lesson-area" id="lesson-area"></div>
+
+    <!-- Controls -->
+    <div class="student-input-wrap">
+      <button class="stuck-btn" id="stuck-btn-el" onclick="openStuck()">I'm stuck</button>
+      <button class="student-next" id="next-btn" onclick="nextStep()">Got it →</button>
+    </div>
+
+    <!-- Stuck overlay -->
+    <div class="stuck-overlay" id="stuck-overlay">
+      <div class="stuck-modal">
+        <h3>Where are you stuck?</h3>
+        <p>Tell Eddy in your own words — the more specific, the better the help.</p>
+        <div class="stuck-chips" id="stuck-chips"></div>
+        <textarea class="stuck-text" id="stuck-text" placeholder="Or type it in your own words..."></textarea>
+        <button class="stuck-submit" onclick="submitStuck()">Get help from Eddy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teacher Panel -->
+  <div class="teacher-panel" id="teacher-panel">
+    <div class="panel-label">
+      <div class="panel-dot" style="background:var(--teal)"></div>
+      Kayak Instructor — Teacher Dashboard
+      <span style="margin-left:auto"><span class="live-badge"><span class="live-pulse"></span>Live</span></span>
+    </div>
+
+    <div class="teacher-inner">
+
+      <!-- KPIs -->
+      <div class="kpi-row" id="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Students</div>
+          <div class="kpi-num" id="kpi-students">1</div>
+          <div class="kpi-sub">in session</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Stuck moments</div>
+          <div class="kpi-num" id="kpi-stuck" style="color:var(--coral)">0</div>
+          <div class="kpi-sub">this session</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Step reached</div>
+          <div class="kpi-num" id="kpi-step" style="color:var(--ocean)">1</div>
+          <div class="kpi-sub">of 5</div>
+        </div>
+      </div>
+
+      <!-- Heatmap -->
+      <div class="heatmap-section">
+        <div class="section-title">Stuck moments by step</div>
+        <div id="heatmap"></div>
+      </div>
+
+      <!-- Live feed -->
+      <div class="live-feed">
+        <div class="section-title" style="margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
+          Student words — exact
+          <span class="live-badge"><span class="live-pulse"></span>updating live</span>
+        </div>
+        <div id="live-feed-items">
+          <div style="font-size:11px;color:var(--muted);font-style:italic;padding:8px 0">No stuck moments yet this session</div>
+        </div>
+      </div>
+
+      <!-- Clusters -->
+      <div class="clusters-section">
+        <div class="section-title">Confusion clusters</div>
+        <div id="clusters">
+          <div style="font-size:11px;color:var(--muted);font-style:italic">Patterns will emerge here as students get stuck</div>
+        </div>
+      </div>
+
+      <!-- Eddy recommendation -->
+      <div class="eddy-rec">
+        <div class="rec-avatar"></div>
+        <div>
+          <div class="rec-label">Eddy's recommendation</div>
+          <div class="rec-text" id="eddy-rec">Waiting for session data — Eddy will recommend one focus area for your next lesson once students have worked through the material.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Eddy Guide -->
+<div id="eddy-guide">
+  <div class="guide-face"></div>
+  <div class="guide-bubble">
+    <div class="guide-name">Eddy</div>
+    <div class="guide-msg" id="guide-msg"></div>
+    <div class="guide-action" id="guide-action"></div>
+  </div>
+</div>
+
+<script>
+// ── Lesson data ───────────────────────────────────────────────────────────────
+const STEPS = [
+  {
+    id: 1,
+    title: 'The hook',
+    eddy: "Welcome to the river, kayaker. Here's a number: 01001101. Looks like nonsense, right? By the end of this run, you'll know exactly what it means — and why computers think in this language.",
+    widget: null,
+    chips: ["What is binary?","Why do computers use 1s and 0s?","I don't know where to start"],
+  },
+  {
+    id: 2,
+    title: 'The one rule',
+    eddy: "Binary has exactly one rule. Each column can only hold a 1 or a 0. A 1 means that column is switched on. A 0 means it's switched off. Each column has a value — 128, 64, 32, 16, 8, 4, 2, 1. You add up the columns that are switched on.",
+    widget: { number: [0,0,0,0,0,0,0,0], values: [128,64,32,16,8,4,2,1] },
+    chips: ["What do the column values mean?","Why those specific numbers?","I don't get the on/off part"],
+  },
+  {
+    id: 3,
+    title: 'Worked example A',
+    eddy: "Let's try the number 5. In binary that's 00000101. See those two 1s? The column worth 4 is on. The column worth 1 is on. 4 + 1 = 5. The river flows from right to left.",
+    widget: { number: [0,0,0,0,0,1,0,1], values: [128,64,32,16,8,4,2,1] },
+    chips: ["Why does it go right to left?","I can't see why it's 5","Which columns are switched on?"],
+  },
+  {
+    id: 4,
+    title: 'Worked example B',
+    eddy: "Your turn to read one. This is 01000110. Which columns are on? What value do they give you? Take a moment — look at each column, check if it's a 1 or a 0, and add up the ones that are switched on.",
+    widget: { number: [0,1,0,0,0,1,1,0], values: [128,64,32,16,8,4,2,1] },
+    chips: ["I keep losing track of which columns are on","I got a different answer","I don't know how to add them up"],
+  },
+  {
+    id: 5,
+    title: 'The reveal',
+    eddy: "01001101. Remember the number from the start? That's 77. One number, eight columns, two possible states. That's all binary ever is. You've just learned the language every computer on earth runs on.",
+    widget: { number: [0,1,0,0,1,1,0,1], values: [128,64,32,16,8,4,2,1] },
+    chips: ["How did you get 77?","Can I try another number?","What happens with bigger numbers?"],
+  },
+];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let currentStep = 0;
+let stuckCount = 0;
+const stuckMoments = [];
+const heatmapData = [0,0,0,0,0];
+const STUDENTS = ['Alex K.', 'Sam T.', 'Jordan M.'];
+
+// ── Render lesson step ────────────────────────────────────────────────────────
+function renderStep(idx) {
+  const step = STEPS[idx];
+  const area = document.getElementById('lesson-area');
+
+  // Clear and add Eddy message
+  area.innerHTML = '';
+
+  const msg = document.createElement('div');
+  msg.className = 'eddy-msg';
+  msg.innerHTML = `
+    <div class="eddy-avatar"></div>
+    <div class="eddy-bubble">${step.eddy}</div>`;
+  area.appendChild(msg);
+
+  // Binary widget
+  if(step.widget) {
+    const w = document.createElement('div');
+    w.className = 'binary-widget';
+    w.innerHTML = buildWidget(step.widget);
+    area.appendChild(w);
+  }
+
+  // Update progress bar
+  renderProgress(idx);
+
+  // Update teacher KPIs
+  document.getElementById('kpi-step').textContent = idx + 1;
+
+  area.scrollTop = area.scrollHeight;
+}
+
+function buildWidget(w) {
+  const cols = w.values.map((val, i) => {
+    const isOne = w.number[i] === 1;
+    return `<div class="b-col">
+      <div class="b-value">${val}</div>
+      <div class="b-chip ${isOne?'one':'zero'}">${w.number[i]}</div>
+    </div>`;
+  }).join('');
+
+  const total = w.values.reduce((sum,v,i) => sum + (w.number[i]===1?v:0), 0);
+
+  return `<div class="binary-cols">${cols}</div>
+    <div class="b-total">${total > 0 ? '= ' + total : 'All columns off = 0'}</div>`;
+}
+
+function renderProgress(idx) {
+  const prog = document.getElementById('lesson-progress');
+  prog.innerHTML = STEPS.map((s,i) => {
+    const cls = i < idx ? 'done' : i === idx ? 'active' : stuckMoments.some(m=>m.step===i) ? 'stuck-here' : '';
+    const line = i < STEPS.length-1 ? `<div class="progress-bar-line ${i < idx ? 'done' : ''}"></div>` : '';
+    return `<div class="progress-step ${cls}">${i+1}</div>${line}`;
+  }).join('');
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function nextStep() {
+  if(currentStep < STEPS.length - 1) {
+    currentStep++;
+    renderStep(currentStep);
+    if(currentStep === 1) setTimeout(() => showGuide('step2'), 1000);
+    if(currentStep === 2) setTimeout(() => showGuide('trystuck'), 1500);
+  } else {
+    document.getElementById('next-btn').textContent = 'Complete ✓';
+    document.getElementById('next-btn').style.background = 'var(--teal)';
+    document.getElementById('next-btn').disabled = true;
+    updateEddyRec();
+    setTimeout(() => showGuide('end'), 1000);
+  }
+}
+
+// ── Stuck mechanic ────────────────────────────────────────────────────────────
+function openStuck() {
+  const step = STEPS[currentStep];
+  const chipsEl = document.getElementById('stuck-chips');
+  chipsEl.innerHTML = step.chips.map(c =>
+    `<div class="stuck-chip" onclick="selectChip(this)">${c}</div>`
+  ).join('');
+  document.getElementById('stuck-text').value = '';
+  document.getElementById('stuck-overlay').classList.add('show');
+}
+
+function selectChip(el) {
+  document.querySelectorAll('.stuck-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('stuck-text').value = el.textContent;
+}
+
+function submitStuck() {
+  const text = document.getElementById('stuck-text').value.trim();
+  if(!text) return;
+
+  document.getElementById('stuck-overlay').classList.remove('show');
+  stuckCount++;
+  heatmapData[currentStep]++;
+
+  const moment = {
+    step: currentStep,
+    stepTitle: STEPS[currentStep].title,
+    text: text,
+    student: 'You (demo)',
+    time: new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}),
+  };
+  stuckMoments.push(moment);
+
+  // Eddy responds
+  addEddyResponse(text);
+
+  // Update teacher dashboard
+  updateTeacherDash(moment);
+
+  // Update KPIs
+  document.getElementById('kpi-stuck').textContent = stuckCount;
+  renderProgress(currentStep);
+  setTimeout(() => showGuide('afterstuck'), 1200);
+}
+
+function addEddyResponse(stuckText) {
+  const area = document.getElementById('lesson-area');
+  const responses = {
+    0: "That's a fair place to start. Binary is just a language where everything is written using only two symbols — 1 and 0. Like morse code, but simpler. Let's slow down and look at just one column.",
+    1: "The column values follow a pattern — each one is double the one to the right. 1, 2, 4, 8, 16... The reason computers use these specific numbers is that each column represents one switch — on or off. And doubling is how you count in twos.",
+    2: "Let's look at just the rightmost two columns. The column worth 4 has a 1 — it's on. The column worth 1 has a 1 — it's on. Everything else is off. So: 4 + 1 = 5. Try covering the other columns with your hand and just looking at those two.",
+    3: "Let's go slower. Start from the right. Is the rightmost column (worth 1) a 1 or a 0? Now move one column left. Keep going, column by column, and write down each value that has a 1. Then add them.",
+    4: "64 + 4 + 2 = 70. Wait — let me check that. Column 7 (64) is on. Column 3 (4) is on. Column 2 (2) is on. 64 + 4 + 2 = 70. Actually this one gives 70, not 77 — 77 comes at the end from our first number.",
+  };
+
+  const response = responses[currentStep] || "Good question. Let's approach this from a different angle. Focus on just one column at a time — which one is causing the confusion?";
+
+  const msg = document.createElement('div');
+  msg.className = 'eddy-msg';
+  msg.innerHTML = `
+    <div class="eddy-avatar"></div>
+    <div class="eddy-bubble" style="border-color:rgba(255,107,107,0.3);background:rgba(255,107,107,0.05)">
+      <em style="font-size:10px;color:var(--coral);font-style:normal;display:block;margin-bottom:4px">Eddy reframes ↓</em>
+      ${response}
+    </div>`;
+  document.getElementById('lesson-area').appendChild(msg);
+  msg.scrollIntoView({behavior:'smooth', block:'end'});
+}
+
+// ── Teacher dashboard updates ─────────────────────────────────────────────────
+function updateTeacherDash(moment) {
+  // Live feed
+  const feed = document.getElementById('live-feed-items');
+  const colors = ['var(--coral)', 'var(--yellow)', 'var(--ocean)'];
+  const item = document.createElement('div');
+  item.className = 'feed-item';
+  item.innerHTML = `
+    <div class="feed-dot" style="background:${colors[stuckCount % colors.length]}"></div>
+    <div class="feed-content">
+      <div style="display:flex;justify-content:space-between">
+        <span class="feed-student">${moment.student}</span>
+        <span class="feed-step">Step ${moment.step+1} · ${moment.time}</span>
+      </div>
+      <div class="feed-text">"${moment.text}"</div>
+    </div>`;
+
+  // Remove placeholder
+  const placeholder = feed.querySelector('div[style]');
+  if(placeholder) placeholder.remove();
+  feed.insertBefore(item, feed.firstChild);
+
+  // Update heatmap
+  updateHeatmap();
+
+  // Update clusters
+  updateClusters();
+
+  // Update recommendation
+  setTimeout(updateEddyRec, 600);
+  // Guide to clusters on second stuck moment
+  if(stuckMoments.length === 2) setTimeout(() => showGuide('clusters'), 1000);
+}
+
+function updateHeatmap() {
+  const el = document.getElementById('heatmap');
+  const max = Math.max(...heatmapData, 1);
+  const colors = ['var(--ocean)','var(--sky)','var(--coral)','var(--yellow)','var(--teal)'];
+
+  el.innerHTML = STEPS.map((s,i) => {
+    const count = heatmapData[i];
+    const pct = Math.max((count/max)*100, count>0?15:4);
+    const highlight = count > 0;
+    return `<div class="heatmap-row">
+      <div class="heatmap-step-label">Step ${i+1}</div>
+      <div class="heatmap-bar" style="width:${pct}%;background:${highlight?colors[i]:'#E8F4FD'};color:${highlight?'white':'var(--muted)'}">${count>0?count:''}</div>
+      <div class="heatmap-count">${count > 0 ? count + ' stuck' : ''}</div>
+    </div>`;
+  }).join('');
+}
+
+function updateClusters() {
+  const clustersEl = document.getElementById('clusters');
+  clustersEl.innerHTML = '';
+
+  // Group by step
+  const byStep = {};
+  stuckMoments.forEach(m => {
+    if(!byStep[m.step]) byStep[m.step] = [];
+    byStep[m.step].push(m.text);
+  });
+
+  const concepts = {
+    1: 'Column values not intuitive',
+    2: 'Right-to-left direction confusing',
+    3: 'Identifying which columns are active',
+    4: 'Addition across multiple columns',
+  };
+
+  Object.entries(byStep).forEach(([step, texts], i) => {
+    const item = document.createElement('div');
+    item.className = 'cluster-item' + (i === Object.keys(byStep).length-1 ? ' new-item' : '');
+    item.innerHTML = `
+      <div class="cluster-concept">${concepts[step] || 'Step ' + (parseInt(step)+1) + ' confusion'}</div>
+      <div class="cluster-words">${texts.map(t => `"${t}"`).join(' · ')}</div>
+      <div class="cluster-count">${texts.length} student${texts.length>1?'s':''} · Step ${parseInt(step)+1}</div>`;
+    clustersEl.appendChild(item);
+  });
+}
+
+function updateEddyRec() {
+  const rec = document.getElementById('eddy-rec');
+  const recs = [
+    "No stuck moments yet. The session is running smoothly — students are moving through the material without flagging confusion.",
+    "One student flagged difficulty with column values at Step 2. Start next lesson with a visual — draw the columns on the board and label each value before opening the platform.",
+    "Column values and the right-to-left direction are both causing confusion. Prioritise the direction rule in your next lesson intro — spend 3 minutes on this before students open their devices.",
+    "Three distinct confusion points emerging. Focus your next lesson on Step 2 column values — it's the conceptual blocker that's causing downstream confusion at Steps 3 and 4.",
+  ];
+  const idx = Math.min(stuckCount, recs.length-1);
+  rec.textContent = recs[idx];
+}
+
+// Simulate other students
+function simulateOtherStudents() {
+  const sim = [
+    { delay:4000,  student:'Alex K.',   step:1, text:"I don't understand why each column doubles" },
+    { delay:9000,  student:'Sam T.',    step:2, text:"Which way do I read it, left to right?" },
+    { delay:15000, student:'Jordan M.', step:1, text:"Why can't a column be 2 or 3?" },
+    { delay:22000, student:'Alex K.',   step:3, text:"I keep adding up wrong, I get 68 not 70" },
+  ];
+
+  sim.forEach(s => {
+    setTimeout(() => {
+      heatmapData[s.step]++;
+      stuckMoments.push({ step:s.step, stepTitle:STEPS[s.step].title, text:s.text, student:s.student, time:new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}) });
+
+      // Update student count
+      const studentNums = new Set(stuckMoments.map(m=>m.student)).size + 1;
+      document.getElementById('kpi-students').textContent = Math.min(studentNums, STUDENTS.length + 1);
+      document.getElementById('kpi-stuck').textContent = stuckMoments.length;
+
+      updateTeacherDash(s);
+    }, s.delay);
+  });
+}
+
+// ── View switching ────────────────────────────────────────────────────────────
+function setView(v) {
+  const main = document.getElementById('main');
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-'+v).classList.add('active');
+  main.className = 'main' + (v==='teacher'?' teacher-focus': v==='student'?' student-focus':'');
+}
+
+// ── Eddy Guide ────────────────────────────────────────────────────────────────
+const GUIDE_MSGS = {
+  welcome:     { msg: "Welcome to Riffle. Student on the left, teacher on the right. Read what I've written and hit Got it →", action: "→ Hit Got it to begin", target: 'next-btn', glow: 'rgba(0,133,199,0.35)', side: 'left' },
+  step2:       { msg: "The teacher dashboard is already tracking your progress in real time — watch the step counter update as you move.", action: null, target: 'kpi-step', glow: 'rgba(6,214,160,0.4)', side: 'right' },
+  trystuck:    { msg: "Now hit I'm stuck. Pick what's confusing you in your own words — watch what happens on the teacher side.", action: "→ Hit the red button", target: 'stuck-btn-el', glow: 'rgba(255,107,107,0.45)', side: 'left', pulse: true },
+  afterstuck:  { msg: "Your exact words just appeared in the teacher's live feed. Not a score — the actual words you used. That's the mechanic.", action: null, target: 'live-feed-items', glow: 'rgba(255,107,107,0.35)', side: 'right' },
+  otherstudents:{ msg: "Other students are getting stuck too. The heatmap shows which steps are causing the most confusion.", action: null, target: 'heatmap', glow: 'rgba(0,133,199,0.35)', side: 'right' },
+  clusters:    { msg: "These clusters group confusions by concept — not by step number. The teacher sees patterns, not individual incidents.", action: null, target: 'clusters', glow: 'rgba(86,204,242,0.4)', side: 'right' },
+  rec:         { msg: "One recommendation. Not a list. Eddy tells the teacher the single most important thing to focus on in the next lesson.", action: null, target: 'eddy-rec', glow: 'rgba(6,214,160,0.4)', side: 'right' },
+  end:         { msg: "That's Riffle. The teacher sees what students actually said — clustered, prioritised, with one clear next step.", action: null, target: null, side: 'left' },
+};
+
+let guideTimer = null;
+let glowEl = null;
+
+function clearGlow() {
+  if (glowEl) {
+    glowEl.classList.remove('glow-target', 'glow-btn');
+    glowEl.style.removeProperty('--glow-col');
+    glowEl = null;
+  }
+}
+
+function showGuide(key) {
+  const m = GUIDE_MSGS[key];
+  if (!m) return;
+  clearTimeout(guideTimer);
+  clearGlow();
+
+  const guide = document.getElementById('eddy-guide');
+  const msg = document.getElementById('guide-msg');
+  const action = document.getElementById('guide-action');
+
+  // Reposition guide
+  if (m.side === 'right') {
+    guide.style.left = 'auto';
+    guide.style.right = '24px';
+    // Flip bubble arrow direction
+    guide.querySelector('.guide-bubble').style.borderRadius = '12px 12px 0 12px';
+  } else {
+    guide.style.right = 'auto';
+    guide.style.left = '24px';
+    guide.querySelector('.guide-bubble').style.borderRadius = '12px 12px 12px 0';
+  }
+
+  guide.classList.remove('visible');
+  setTimeout(() => {
+    msg.textContent = m.msg;
+    action.textContent = m.action || '';
+    guide.classList.add('visible');
+
+    // Glow target element
+    if (m.target) {
+      // Find by id, or by class
+      const el = document.getElementById(m.target) ||
+                 document.querySelector('.' + m.target);
+      if (el) {
+        glowEl = el;
+        el.style.setProperty('--glow-col', m.glow || 'rgba(0,133,199,0.4)');
+        el.classList.add(m.pulse ? 'glow-btn' : 'glow-target');
+      }
+    }
+
+    guideTimer = setTimeout(() => {
+      guide.classList.remove('visible');
+      clearGlow();
+    }, 7000);
+  }, 300);
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+renderStep(0);
+updateHeatmap();
+simulateOtherStudents();
+
+// Guide sequence
+setTimeout(() => showGuide('welcome'), 800);
+setTimeout(() => showGuide('otherstudents'), 10000);
+setTimeout(() => showGuide('rec'), 24000);
+</script>
+</body>
+</html>

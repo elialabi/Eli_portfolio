@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WriterStrike — Interactive Preview</title>
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.8.0/dist/paper.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-image: url('https://www.transparenttextures.com/patterns/notebook.png'),
+      repeating-linear-gradient(
+        transparent,
+        transparent 31px,
+        #b8d4ea 31px,
+        #b8d4ea 32px
+      );
+    background-color: #f4f4f9;
+    background-attachment: fixed;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Paper plane intro ── */
+  #intro-screen {
+    position: fixed;
+    inset: 0;
+    background-image: url('https://www.transparenttextures.com/patterns/notebook.png'),
+      repeating-linear-gradient(transparent, transparent 31px, #b8d4ea 31px, #b8d4ea 32px);
+    background-color: rgba(244,244,249,0.97);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .plane-wrap {
+    position: absolute;
+    top: 42%;
+    left: -80px;
+    animation: flyAcross 1.8s cubic-bezier(0.4,0,0.2,1) forwards;
+    animation-delay: 0.3s;
+  }
+
+  @keyframes flyAcross {
+    0%   { left: -80px; top: 42%; opacity: 0; transform: rotate(-5deg) scale(0.8); }
+    20%  { opacity: 1; }
+    50%  { top: 38%; transform: rotate(-8deg) scale(1); }
+    80%  { top: 42%; transform: rotate(-5deg) scale(1); }
+    100% { left: 110%; top: 35%; opacity: 0.4; transform: rotate(-12deg) scale(0.7); }
+  }
+
+  .paper-plane {
+    width: 72px;
+    filter: drop-shadow(2px 4px 6px rgba(108,99,255,0.3));
+  }
+
+  /* Lined paper trail behind plane */
+  .plane-trail {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, rgba(108,99,255,0.15), transparent);
+    animation: trailFade 1.8s ease forwards;
+    animation-delay: 0.3s;
+    pointer-events: none;
+  }
+
+  @keyframes trailFade {
+    0% { opacity: 0; }
+    30% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  .intro-title {
+    font-family: 'Courier New', monospace;
+    font-size: 52px;
+    color: #6c63ff;
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: fadeInTitle 0.6s ease forwards;
+    animation-delay: 2s;
+    position: relative;
+  }
+
+  .intro-title::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 5px;
+    background: #6c63ff;
+    border-radius: 3px;
+    margin-top: 8px;
+    animation: underlineGrow 0.5s ease forwards;
+    animation-delay: 2.6s;
+  }
+
+  @keyframes underlineGrow {
+    to { width: 100%; }
+  }
+
+  @keyframes fadeInTitle {
+    to { opacity: 1; }
+  }
+
+  .intro-sub {
+    font-size: 16px;
+    color: #888;
+    opacity: 0;
+    animation: fadeInTitle 0.5s ease forwards;
+    animation-delay: 2.3s;
+    margin-bottom: 32px;
+  }
+
+  .intro-badge {
+    background: #6c63ff;
+    color: white;
+    font-size: 10px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    opacity: 0;
+    animation: fadeInTitle 0.5s ease forwards;
+    animation-delay: 2.5s;
+  }
+
+  /* ── Main app ── */
+  #app {
+    display: none;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  /* Lined notebook effect on textareas */
+  .notebook-bg {
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      #b8d4ea 31px,
+      #b8d4ea 32px
+    );
+    background-color: white;
+    line-height: 32px;
+  }
+
+  /* Site header */
+  .site-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .site-title {
+    font-family: 'Courier New', monospace;
+    font-size: 40px;
+    color: #6c63ff;
+    display: inline-block;
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  .site-title::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 5px;
+    background: #6c63ff;
+    border-radius: 3px;
+    margin-top: 6px;
+  }
+
+  .site-tagline {
+    font-size: 14px;
+    color: #888;
+    margin-top: 8px;
+  }
+
+  /* Step nav */
+  .step-nav {
+    display: flex;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+
+  .step-btn {
+    flex: 1;
+    padding: 13px 10px;
+    border: none;
+    border-right: 1px solid #eee;
+    background: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    color: #aaa;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    transition: background 0.2s, color 0.2s;
+    font-weight: 500;
+  }
+
+  .step-btn:last-child { border-right: none; }
+  .step-btn.active { background: #6c63ff; color: white; }
+  .step-btn.done { background: #e8f5e9; color: #4CAF50; }
+
+  .step-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .step-btn.active .step-num { background: white; color: #6c63ff; border-color: white; }
+
+  /* Panels */
+  .panel { display: none; }
+  .panel.active { display: block; animation: fadeUp 0.3s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Cards */
+  .card {
+    background: rgba(255,255,255,0.88);
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .card h2 {
+    font-family: 'Courier New', monospace;
+    color: #6c63ff;
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .card p.sub {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 18px;
+    line-height: 1.6;
+  }
+
+  .card h3 {
+    font-size: 10px;
+    color: #aaa;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-family: 'Courier New', monospace;
+  }
+
+  .scene-textarea {
+    width: 100%;
+    min-height: 220px;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+    background: white;
+  }
+
+  .scene-textarea:focus { border-color: #6c63ff; }
+
+  /* Context row */
+  .context-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .context-select {
+    flex: 1;
+    min-width: 130px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    background: white;
+    outline: none;
+    color: #444;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 16px;
+    padding: 11px 26px;
+    background: #ccd6f6;
+    color: #131313;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(38,57,88,0.2);
+  }
+
+  .btn-primary:hover { background: #264d99; color: white; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-green {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 22px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-right: 8px;
+  }
+
+  .btn-green:hover { background: #45a049; }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: transparent;
+    color: #6c63ff;
+    border: 2px solid #6c63ff;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-outline:hover { background: rgba(108,99,255,0.08); }
+
+  /* Loader */
+  .loader {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(108,99,255,0.07);
+    border-left: 4px solid #6c63ff;
+    border-radius: 5px;
+  }
+
+  .loader.show { display: flex; }
+
+  .spinner {
+    width: 16px; height: 16px;
+    border: 3px solid rgba(108,99,255,0.2);
+    border-top-color: #6c63ff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loader-msg {
+    font-size: 13px;
+    color: #6c63ff;
+    font-style: italic;
+  }
+
+  /* Results panel */
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 620px) {
+    .results-grid { grid-template-columns: 1fr; }
+    .step-btn span { display: none; }
+    .context-row { flex-direction: column; }
+  }
+
+  .scene-preview {
+    font-family: 'Courier New', monospace;
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: #444;
+    max-height: 220px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+  }
+
+  .inaccuracy-item {
+    display: flex;
+    gap: 11px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    animation: slideIn 0.35s ease both;
+  }
+
+  .inaccuracy-item:last-child { border-bottom: none; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-6px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .inaccuracy-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  .inaccuracy-cat {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 2px;
+    font-family: 'Courier New', monospace;
+  }
+
+  .inaccuracy-msg {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #555;
+  }
+
+  /* Chart */
+  .chart-wrap {
+    background: rgba(255,255,255,0.88);
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 28px;
+    margin-bottom: 18px;
+  }
+
+  .chart-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .chart-title {
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    color: #6c63ff;
+    margin-bottom: 3px;
+  }
+
+  .chart-sub { font-size: 12px; color: #aaa; }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #666;
+  }
+
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  #bubble-svg { width: 100%; display: block; }
+
+  .summary-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  @media (max-width: 500px) { .summary-row { grid-template-columns: 1fr 1fr; } }
+
+  .summary-card {
+    background: #f9f9f9;
+    border-radius: 7px;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #eee;
+  }
+
+  .summary-num {
+    font-family: 'Courier New', monospace;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  .summary-label {
+    font-size: 9px;
+    color: #aaa;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .next-scene-wrap {
+    background: rgba(255,255,255,0.85);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .next-scene-wrap p { font-size: 14px; color: #666; }
+
+  /* Tooltip */
+  .tooltip {
+    position: fixed;
+    background: rgba(30,27,75,0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 500;
+    line-height: 1.5;
+    max-width: 200px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Intro screen with paper plane -->
+<div id="intro-screen">
+  <div class="plane-trail"></div>
+  <div class="plane-wrap">
+    <!-- Paper plane SVG -->
+    <svg class="paper-plane" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 40 L95 5 L60 75 L45 50 Z" fill="#6c63ff" opacity="0.85"/>
+      <path d="M5 40 L45 50 L40 65 Z" fill="#9c94ff" opacity="0.7"/>
+      <path d="M45 50 L60 75 L55 52 Z" fill="#4a42cc" opacity="0.9"/>
+      <path d="M5 40 L95 5" stroke="white" stroke-width="1" opacity="0.3"/>
+    </svg>
+  </div>
+  <div class="intro-title" id="typed-title"><span id="typed-text"></span></div>
+  <p class="intro-sub">AI-powered script fact-checker</p>
+  <div class="intro-badge">✦ INTERACTIVE PREVIEW</div>
+</div>
+
+<!-- Main app -->
+<div id="app">
+  <div class="site-header">
+    <div class="site-title">WriterStrike</div>
+    <div class="site-tagline">AI-powered script fact-checker · Interactive Preview</div>
+  </div>
+
+  <!-- Step nav -->
+  <div class="step-nav">
+    <button class="step-btn active" id="step-1" onclick="goTo(1)">
+      <div class="step-num">1</div>
+      <span>Paste Scene</span>
+    </button>
+    <button class="step-btn" id="step-2" onclick="goTo(2)">
+      <div class="step-num">2</div>
+      <span>Fact Check</span>
+    </button>
+    <button class="step-btn" id="step-3" onclick="goTo(3)">
+      <div class="step-num">3</div>
+      <span>Visualisation</span>
+    </button>
+  </div>
+
+  <!-- Panel 1 -->
+  <div class="panel active" id="panel-1">
+    <div class="card">
+      <h2>Paste Your Scene</h2>
+      <p class="sub">WriterStrike checks your script for factual inaccuracies across four categories — historical, cultural, scientific, and mathematical.</p>
+
+      <textarea class="scene-textarea" id="scene-input" placeholder="Paste your scene here..."></textarea>
+
+      <div class="context-row">
+        <select class="context-select">
+          <option>Screenplay</option>
+          <option>Novel</option>
+          <option>Short Story</option>
+          <option>Stage Play</option>
+        </select>
+        <select class="context-select">
+          <option>Science Fiction</option>
+          <option>Drama</option>
+          <option>Historical Fiction</option>
+          <option>Thriller</option>
+        </select>
+        <select class="context-select">
+          <option>3 — Historical Fiction</option>
+          <option>0 — Fantasy</option>
+          <option>2 — Realistic Fiction</option>
+          <option>4 — Non-Fiction</option>
+        </select>
+      </div>
+
+      <button class="btn-primary" id="analyse-btn" onclick="analyse()">
+        Analyse Scene →
+      </button>
+
+      <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <div class="loader-msg" id="loader-msg">Sending to AI pipeline...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel 2 -->
+  <div class="panel" id="panel-2">
+    <div class="results-grid">
+      <div class="card">
+        <h3>Your Scene</h3>
+        <div class="scene-preview" id="scene-preview"></div>
+      </div>
+      <div class="card">
+        <h3>Inaccuracy Summary</h3>
+        <div id="inaccuracy-list"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn-green" onclick="goTo(3)">View Visualisation →</button>
+      <button class="btn-outline" onclick="goTo(1)">← Revise Scene</button>
+    </div>
+  </div>
+
+  <!-- Panel 3 -->
+  <div class="panel" id="panel-3">
+    <div class="chart-wrap">
+      <div class="chart-top">
+        <div>
+          <div class="chart-title">Inaccuracy Visualisation</div>
+          <div class="chart-sub">8 scenes · hover any bubble to explore</div>
+        </div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <svg id="bubble-svg" height="360"></svg>
+      <div class="summary-row" id="summary-row"></div>
+    </div>
+    <div class="next-scene-wrap">
+      <p>Ready to check another scene?</p>
+      <div style="display:flex;gap:10px;">
+        <button class="btn-primary" onclick="goTo(1);document.getElementById('scene-input').value=''">Paste Next Scene →</button>
+        <button class="btn-outline" onclick="goTo(2)">← Back to Results</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+const EXAMPLE = `INT. APOLLO COMMAND MODULE - DAY
+
+Neil Armstrong leans over the console as the craft approaches Mars. Buzz Aldrin checks the readout — 50,000 mph, dead on course.
+
+ARMSTRONG
+Einstein said this would take exactly three days. The math checks out.
+
+He adjusts his collar. Outside, the red surface of Mars grows larger.
+
+ALDRIN
+(slang)
+That's totally radical, dude. Think they'll have a McDonald's down there?
+
+Armstrong doesn't laugh. He fires the nuclear engines and begins final descent.`;
+
+const INACCURACIES = [
+  { cat:"Historical", color:"#3b82f6", msg:"Neil Armstrong landed on the Moon, not Mars. Apollo 11's destination was the lunar surface on 20 July 1969." },
+  { cat:"Scientific",  color:"#10b981", msg:"Apollo 11 travelled at ~24,791 mph on its translunar trajectory — not 50,000 mph as stated." },
+  { cat:"Mathematical",color:"#ef4444", msg:"Einstein's special relativity does not predict a fixed 3-day journey time. That figure comes from orbital mechanics." },
+  { cat:"Cultural",    color:"#f59e0b", msg:"The phrase 'totally radical, dude' is 1980s California slang — not 1969 NASA language." },
+];
+
+const BUBBLE_DATA = [
+  { id:"Scene 1",      value:4, cultural:1, historical:2, scientific:1, mathematical:0, group:"historical" },
+  { id:"Scene 2",      value:2, cultural:0, historical:1, scientific:1, mathematical:0, group:"scientific" },
+  { id:"Scene 3",      value:6, cultural:2, historical:1, scientific:2, mathematical:1, group:"cultural" },
+  { id:"Scene 4",      value:1, cultural:0, historical:0, scientific:0, mathematical:1, group:"mathematical" },
+  { id:"Scene 5",      value:3, cultural:1, historical:2, scientific:0, mathematical:0, group:"historical" },
+  { id:"Scene 6",      value:0, cultural:0, historical:0, scientific:0, mathematical:0, group:"no_feedback" },
+  { id:"Your scene",   value:5, cultural:1, historical:1, scientific:2, mathematical:1, group:"scientific" },
+  { id:"Scene 8",      value:2, cultural:1, historical:0, scientific:1, mathematical:0, group:"cultural" },
+];
+
+const COLORS = { cultural:"#f59e0b", historical:"#3b82f6", scientific:"#10b981", mathematical:"#ef4444", no_feedback:"#94a3b8" };
+const LABELS = { cultural:"Cultural", historical:"Historical", scientific:"Scientific", mathematical:"Mathematical", no_feedback:"No issues" };
+
+const LOADER_MSGS = [
+  "Sending to AI pipeline...",
+  "Checking historical accuracy...",
+  "Cross-referencing scientific claims...",
+  "Evaluating cultural context...",
+  "Checking mathematical statements...",
+  "Generating inaccuracy report...",
+];
+
+// ── Intro ─────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  // Start typed.js after plane animation
+  setTimeout(() => {
+    new Typed('#typed-text', {
+      strings: ['WriterStrike'],
+      typeSpeed: 75,
+      backSpeed: 50,
+      loop: false,
+      showCursor: false,
+    });
+  }, 2100);
+
+  // Show app after intro
+  setTimeout(() => {
+    document.getElementById('intro-screen').style.transition = 'opacity 0.5s ease';
+    document.getElementById('intro-screen').style.opacity = '0';
+    setTimeout(() => {
+      document.getElementById('intro-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      document.getElementById('scene-input').value = EXAMPLE;
+    }, 500);
+  }, 3600);
+});
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+let unlocked = 1;
+
+function goTo(n) {
+  if (n > unlocked) return;
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.step-btn').forEach((b, i) => {
+    b.classList.remove('active','done');
+    if (i + 1 < n) b.classList.add('done');
+    else if (i + 1 === n) b.classList.add('active');
+  });
+  document.getElementById(`panel-${n}`).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (n === 3) renderChart();
+}
+
+// ── Analyse ───────────────────────────────────────────────────────────────────
+function analyse() {
+  const text = document.getElementById('scene-input').value.trim();
+  if (!text) {
+    const ta = document.getElementById('scene-input');
+    ta.style.borderColor = '#ef4444';
+    setTimeout(() => ta.style.borderColor = '', 1200);
+    return;
+  }
+
+  const btn = document.getElementById('analyse-btn');
+  const loader = document.getElementById('loader');
+  const msg = document.getElementById('loader-msg');
+
+  btn.disabled = true;
+  loader.classList.add('show');
+
+  let i = 0;
+  const iv = setInterval(() => { msg.textContent = LOADER_MSGS[i++ % LOADER_MSGS.length]; }, 520);
+
+  setTimeout(() => {
+    clearInterval(iv);
+    loader.classList.remove('show');
+    btn.disabled = false;
+
+    // Build results
+    document.getElementById('scene-preview').textContent = text;
+    const list = document.getElementById('inaccuracy-list');
+    list.innerHTML = '';
+    INACCURACIES.forEach((item, idx) => {
+      const el = document.createElement('div');
+      el.className = 'inaccuracy-item';
+      el.style.animationDelay = `${idx * 0.1}s`;
+      el.innerHTML = `
+        <div class="inaccuracy-dot" style="background:${item.color}"></div>
+        <div>
+          <div class="inaccuracy-cat" style="color:${item.color}">${item.cat.toUpperCase()}</div>
+          <div class="inaccuracy-msg">${item.msg}</div>
+        </div>`;
+      list.appendChild(el);
+    });
+
+    unlocked = 3;
+    goTo(2);
+  }, 3400);
+}
+
+// ── D3 Chart ──────────────────────────────────────────────────────────────────
+let chartDone = false;
+
+function renderChart() {
+  if (chartDone) return;
+  chartDone = true;
+
+  const svgEl = document.getElementById('bubble-svg');
+  const W = svgEl.parentElement.clientWidth - 56;
+  const H = 360;
+  svgEl.setAttribute('width', W);
+
+  const svg = d3.select('#bubble-svg');
+  const tip = document.getElementById('tooltip');
+
+  const pack = d3.pack().size([W, H]).padding(8);
+  const root = pack(d3.hierarchy({ children: BUBBLE_DATA }).sum(d => Math.max(d.value, 0.6)));
+
+  const node = svg.selectAll('g').data(root.leaves()).join('g')
+    .attr('transform', d => `translate(${d.x},${d.y})`)
+    .style('cursor', 'pointer');
+
+  node.append('circle')
+    .attr('r', 0)
+    .attr('fill', d => COLORS[d.data.group])
+    .attr('fill-opacity', 0.72)
+    .attr('stroke', d => COLORS[d.data.group])
+    .attr('stroke-width', 2).attr('stroke-opacity', 0.35)
+    .transition().duration(700).delay((_, i) => i * 75)
+    .attr('r', d => d.r);
+
+  node.append('text')
+    .attr('text-anchor', 'middle').attr('dy', '-0.15em')
+    .attr('font-family', "'Courier New', monospace")
+    .attr('font-size', d => Math.min(d.r * 0.3, 10))
+    .attr('fill', 'white').attr('font-weight', 'bold')
+    .text(d => d.data.id)
+    .style('opacity', 0)
+    .transition().duration(400).delay((_, i) => i * 75 + 500)
+    .style('opacity', d => d.r > 28 ? 1 : 0);
+
+  node.append('text')
+    .attr('text-anchor', 'middle').attr('dy', '1.1em')
+    .attr('font-family', "'Courier New', monospace")
+    .attr('font-size', d => Math.min(d.r * 0.48, 15))
+    .attr('fill', 'white')
+    .text(d => d.data.value > 0 ? d.data.value : '✓')
+    .style('opacity', 0)
+    .transition().duration(400).delay((_, i) => i * 75 + 500)
+    .style('opacity', d => d.r > 22 ? 1 : 0);
+
+  node.on('mousemove', (e, d) => {
+    tip.style.opacity = '1';
+    tip.style.left = (e.clientX + 14) + 'px';
+    tip.style.top = (e.clientY - 10) + 'px';
+    tip.innerHTML = `<strong>${d.data.id}</strong><br>Total: ${d.data.value}<br>Cultural: ${d.data.cultural} · Historical: ${d.data.historical}<br>Scientific: ${d.data.scientific} · Math: ${d.data.mathematical}`;
+  }).on('mouseleave', () => tip.style.opacity = '0');
+
+  // Legend
+  const legend = document.getElementById('legend');
+  Object.entries(LABELS).forEach(([key, label]) => {
+    const el = document.createElement('div');
+    el.className = 'legend-item';
+    el.innerHTML = `<div class="legend-dot" style="background:${COLORS[key]}"></div>${label}`;
+    legend.appendChild(el);
+  });
+
+  // Summary
+  const row = document.getElementById('summary-row');
+  const totals = BUBBLE_DATA.reduce((a, d) => {
+    a.cultural += d.cultural; a.historical += d.historical;
+    a.scientific += d.scientific; a.mathematical += d.mathematical;
+    return a;
+  }, { cultural:0, historical:0, scientific:0, mathematical:0 });
+
+  Object.entries(totals).forEach(([key, val]) => {
+    const el = document.createElement('div');
+    el.className = 'summary-card';
+    el.innerHTML = `<div class="summary-num" style="color:${COLORS[key]}">${val}</div><div class="summary-label">${LABELS[key]}</div>`;
+    row.appendChild(el);
+  });
+}
+</script>
+</body>
+</html>
