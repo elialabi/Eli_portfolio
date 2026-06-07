@@ -160,7 +160,7 @@ function Ticker() {
 
 // ─── Nav Tabs ─────────────────────────────────────────────────────────────────
 function NavTabs({ active, onChange }) {
-  const tabs = ["STORY", "PROJECTS", "WRITING", "CONTACT"];
+  const tabs = ["STORY", "PROJECTS", "WORKFLOWS", "WRITING", "CONTACT"];
   const [photoOpen, setPhotoOpen] = useState(false);
   const PHOTO = "data:image/png;base64,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";
 
@@ -1281,14 +1281,1465 @@ export default function Portfolio() {
       <NavTabs active={activeTab} onChange={setActiveTab} />
       <div style={{ paddingTop: 48 }}>
         <Ticker />
-        <NameIntro />
-        <NavDots total={TIMELINE.length} active={Math.max(0, activeStop)} />
-        {TIMELINE.map((stop, i) => (
-          <Stop key={stop.id} stop={stop} index={i} onSkillClick={setActiveSkill} />
-        ))}
-        <SkillsStrip onSkillClick={setActiveSkill} />
-        <WorkSection />
+        {activeTab === "STORY" && (
+          <>
+            <NameIntro />
+            <NavDots total={TIMELINE.length} active={Math.max(0, activeStop)} />
+            {TIMELINE.map((stop, i) => (
+              <Stop key={stop.id} stop={stop} index={i} onSkillClick={setActiveSkill} />
+            ))}
+            <SkillsStrip onSkillClick={setActiveSkill} />
+            <WorkSection />
+          </>
+        )}
+        {activeTab === "PROJECTS" && <ProjectsPage />}
+        {activeTab === "WORKFLOWS" && (
+          <div style={{ position:"fixed", top:48, left:0, right:0, bottom:0, zIndex:10 }}>
+            <iframe src="https://elialabi-eli-portfol-0wpb.bolt.host/workflows.html" style={{ width:"100%", height:"100%", border:"none" }} title="AI Workflows"/>
+          </div>
+        )}
+        {activeTab === "WRITING" && (
+          <div style={{
+            minHeight: "80vh", display: "flex",
+            alignItems: "center", justifyContent: "center",
+            background: C.black,
+          }}>
+            <div style={{
+              fontFamily: "'Courier New', monospace",
+              fontSize: 11, color: C.white,
+              opacity: 0.3, letterSpacing: "0.3em",
+            }}>WRITING — COMING SOON</div>
+          </div>
+        )}
+        {activeTab === "CONTACT" && (
+          <div style={{
+            minHeight: "80vh", display: "flex",
+            alignItems: "center", justifyContent: "center",
+            background: C.black,
+          }}>
+            <div style={{
+              fontFamily: "'Courier New', monospace",
+              fontSize: 11, color: C.white,
+              opacity: 0.3, letterSpacing: "0.3em",
+            }}>CONTACT — SCROLL TO BOTTOM OF STORY</div>
+          </div>
+        )}
         <FloatingChat initialSkill={activeSkill} onSkillHandled={() => setActiveSkill(null)} />
+      </div>
+    </div>
+  );
+}
+
+// ─── Projects Data ────────────────────────────────────────────────────────────
+const PANELS = [
+  {
+    id: "qa",
+    label: "ALIBI AI",
+    accent: C.yellow,
+    bg: C.black,
+    tagline: "AI quality systems that close the loop.",
+    projects: [
+      {
+        id: "qa-01",
+        title: "AI AGENT QA PIPELINE",
+        sector: "Retail · Live Commercial Deployment",
+        tags: ["Python", "Anthropic API", "Playwright", "Power BI"],
+        problem: "A live retail AI agent was producing inconsistent responses — no systematic way to measure quality, identify failures, or verify fixes.",
+        solution: "Built a full automated QA pipeline from scratch. 100+ test scenarios run weekly. Golden set methodology, structured rubrics, pass/fail scoring, violation categorisation. Results fed into a Power BI dashboard shared with stakeholders.",
+        result: "Pass rate lifted from 34% to 85%. Weekly findings reports now route directly to the product team — failures flagged, fixes made, re-tested. A continuous improvement loop, not a one-off audit.",
+        metric: "34% → 85%",
+        metricLabel: "pass rate",
+      },
+      {
+        id: "qa-02",
+        title: "CONSUMER AI SAFETY REVIEW",
+        sector: "Alcohol Brand · Consumer-Facing Chatbot",
+        tags: ["QA Frameworks", "Policy Compliance", "Rubric Design"],
+        problem: "A consumer-facing AI chatbot for an alcohol brand had an unreliable age verification flow — a critical safety and legal risk with real customers.",
+        solution: "Designed a structured safety review framework covering age verification, recommendation accuracy, tone compliance, and policy adherence. Established a logging system for tracking and escalating violations across test runs.",
+        result: "Identified known behavioural variance in the age gate — a critical failure mode. Produced structured findings reports with clear corrective action recommendations. Staging and production environments both evaluated.",
+        metric: "Critical",
+        metricLabel: "safety issue identified",
+      },
+
+    ],
+  },
+  {
+    id: "workflows",
+    label: "WORKFLOWS",
+    accent: C.blue,
+    bg: C.paper,
+    tagline: "Automation built to eliminate manual work.",
+    projects: [
+      {
+        id: "wf-01",
+        title: "AI MODERATION PIPELINE",
+        sector: "AI Studio · Internal Tooling",
+        tags: ["Python", "Anthropic API", "Google Sheets", "Zapier"],
+        problem: "QA results were being logged manually — copy-pasted from test runs into spreadsheets and then into Jira tickets by hand.",
+        solution: "Built a Python pipeline that runs test scenarios, scores outputs automatically, writes structured results to Google Sheets via CSV, and auto-comments on Jira tickets with formatted findings — no manual steps.",
+        result: "Eliminated hours of manual logging per week. Results are traceable, consistent, and immediately available to the product team without anyone having to touch a spreadsheet.",
+        metric: "0",
+        metricLabel: "manual steps",
+      },
+      {
+        id: "wf-02",
+        title: "DOCUMENT GENERATION SYSTEM",
+        sector: "AI Studio · Client Workflows",
+        tags: ["Gemini API", "Google Apps Script", "Make"],
+        problem: "Client document production was a slow manual process — templating, populating, formatting, sending. Repetitive and error-prone.",
+        solution: "Built an AI-powered document generation system using Gemini API and Google Apps Script. Templates live in Google Docs, data flows in via a trigger, Gemini populates and formats, output delivered automatically.",
+        result: "Manual document production eliminated for recurring client workflows. Practical AI efficiency demonstrated directly to client teams as part of the adoption programme.",
+        metric: "100%",
+        metricLabel: "automated",
+      },
+      {
+        id: "wf-03",
+        title: "AI PRODUCTIVITY TRACKER",
+        sector: "B2B SaaS · Internal Analytics",
+        tags: ["Zoho Analytics", "CRM", "Dashboards"],
+        problem: "The team was using AI tools but had no visibility into how, how often, or whether it was making a difference to output.",
+        solution: "Built a generative AI productivity tracker in Zoho Analytics — pulling usage data, mapping it to business output metrics, and surfacing trends in a dashboard accessible to the whole team.",
+        result: "First time the organisation had visibility into AI usage patterns and their business impact. Data used to inform decisions about which tools to invest in and where to focus adoption effort.",
+        metric: "First",
+        metricLabel: "visibility into AI usage",
+      },
+    ],
+  },
+  {
+    id: "experimental",
+    label: "PERSONAL PROJECTS",
+    accent: C.pink,
+    bg: C.dark,
+    tagline: "Built outside work. Built to prove something.",
+    projects: [
+      {
+        id: "ex-01",
+        title: "WRITERSTRIKE",
+        sector: "MSc Thesis · University of the Arts London",
+        tags: ["GPT-4", "Model Evaluation", "A/B Testing", "Responsible AI"],
+        problem: "The 2023 WGA writers strike raised urgent questions about AI and creative rights — but there was no structured evaluation of how AI writing tools actually performed against human-defined quality and ethical criteria.",
+        solution: "Designed an AI-assisted writing tool and ran A/B tests across multiple AI models including GPT-4 and Copilot — evaluating not just output quality but potential harms, copyright implications, and ethical risks. Developed a dual feedback loop methodology for consistent evaluation.",
+        result: "Award nominated thesis. Produced structured insight into model strengths, failure modes, and what responsible AI deployment actually looks like when creative rights are at stake.",
+        metric: "🏆",
+        metricLabel: "Award nominated",
+      },
+      {
+        id: "ex-02",
+        title: "RIFFLE — EDDY",
+        sector: "Hackathon · Google Cloud Rapid Agent",
+        tags: ["React", "Gemini 2.5 Flash", "MongoDB", "Node.js"],
+        problem: "KS3 Computing students get stuck and have no way to explain what they don't understand — and teachers can't see where confusion is happening in real time.",
+        solution: "Built Riffle, an adaptive learning platform powered by Eddy — an AI agent character who activates when a student hits 'I'm stuck'. Student types their confusion in their own words. Eddy regenerates the explanation around their specific gap and adjusts the interactive activity. Teacher dashboard shows exactly where students struggled and what they said.",
+        result: "Full stack platform built solo for the Google Cloud hackathon. React/Vite frontend, Express/Node.js backend, MongoDB Atlas, Gemini 2.5 Flash. The stuck mechanic is the core — freetext input driving targeted AI adaptation.",
+        metric: "Solo",
+        metricLabel: "full stack build",
+      },
+    ],
+  },
+];
+
+
+// ─── Preview Components ───────────────────────────────────────────────────────
+// ─── Preview: Alibi QA (own colour scheme — navy/green SaaS look) ─────────────
+function PreviewQA() {
+  const QC = { navy: "#0F172A", card: "#1E293B", green: "#10B981", red: "#EF4444", yellow: "#F59E0B", text: "#E2E8F0", sub: "#94A3B8", border: "#334155" };
+  const [running, setRunning] = useState(false);
+  const [results, setResults] = useState([]);
+  const tests = [
+    { id: "TC-001", name: "Scope boundary", outcome: "PASS" },
+    { id: "TC-002", name: "Tone consistency", outcome: "PASS" },
+    { id: "TC-003", name: "Policy adherence", outcome: "PASS" },
+    { id: "TC-004", name: "Age gate validation", outcome: "FAIL" },
+    { id: "TC-005", name: "Response accuracy", outcome: "PASS" },
+    { id: "TC-006", name: "Escalation trigger", outcome: "PASS" },
+  ];
+
+  const run = () => {
+    setRunning(true); setResults([]);
+    tests.forEach((t, i) => setTimeout(() => {
+      setResults(p => [...p, t]);
+      if (i === tests.length - 1) setRunning(false);
+    }, i * 350 + 200));
+  };
+
+  const pass = results.filter(r => r.outcome === "PASS").length;
+  const fail = results.filter(r => r.outcome === "FAIL").length;
+  const pct = results.length > 0 ? Math.round(pass / results.length * 100) : null;
+
+  return (
+    <div style={{ background: QC.navy, borderRadius: 8, padding: 16, fontFamily: "'JetBrains Mono', 'Courier New', monospace" }}>
+      {/* Toolbar */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14, paddingBottom: 12, borderBottom: `1px solid ${QC.border}` }}>
+        <div>
+          <div style={{ fontSize: 11, color: QC.green, letterSpacing: "0.08em", fontWeight: "bold" }}>ALIBI QA</div>
+          <div style={{ fontSize: 9, color: QC.sub, marginTop: 2 }}>Pipeline Runner v2.4</div>
+        </div>
+        <button onClick={run} disabled={running} style={{
+          background: running ? QC.border : QC.green, color: running ? QC.sub : "white",
+          border: "none", borderRadius: 4, padding: "5px 14px",
+          fontFamily: "inherit", fontSize: 9, letterSpacing: "0.1em",
+          cursor: running ? "default" : "pointer", fontWeight: "bold",
+        }}>{running ? "▶ RUNNING..." : "▶ RUN PIPELINE"}</button>
+      </div>
+
+      {/* Test rows */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+        {tests.map(t => {
+          const r = results.find(x => x.id === t.id);
+          return (
+            <div key={t.id} style={{
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              padding: "7px 10px", borderRadius: 4,
+              background: r ? (r.outcome === "PASS" ? "rgba(16,185,129,0.08)" : "rgba(239,68,68,0.1)") : QC.card,
+              border: `1px solid ${r ? (r.outcome === "PASS" ? "rgba(16,185,129,0.2)" : "rgba(239,68,68,0.3)") : QC.border}`,
+              transition: "all 0.3s ease",
+            }}>
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <span style={{ fontSize: 8, color: QC.sub, width: 44 }}>{t.id}</span>
+                <span style={{ fontSize: 10, color: r ? QC.text : QC.sub }}>{t.name}</span>
+              </div>
+              {r && (
+                <span style={{
+                  fontSize: 8, fontWeight: "bold",
+                  color: r.outcome === "PASS" ? QC.green : QC.red,
+                  letterSpacing: "0.1em",
+                }}>{r.outcome}</span>
+              )}
+              {!r && running && <span style={{ fontSize: 8, color: QC.sub, animation: "pulse 1s infinite" }}>...</span>}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Summary */}
+      {results.length === tests.length && (
+        <div style={{ marginTop: 12, padding: "10px 12px", borderRadius: 4, background: QC.card, border: `1px solid ${QC.border}` }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+            <span style={{ fontSize: 9, color: QC.sub }}>PASS RATE</span>
+            <span style={{ fontSize: 16, fontWeight: "bold", color: pct >= 80 ? QC.green : QC.red }}>{pct}%</span>
+          </div>
+          <div style={{ height: 4, background: QC.border, borderRadius: 2 }}>
+            <div style={{ width: `${pct}%`, height: "100%", background: pct >= 80 ? QC.green : QC.red, borderRadius: 2, transition: "width 0.5s ease" }}/>
+          </div>
+          {fail > 0 && (
+            <div style={{ marginTop: 10, padding: "6px 10px", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 4, fontSize: 9, color: QC.red }}>
+              ⚠ {fail} violation(s) → flagging to CMS for review
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Preview: Riffle/Eddy (uses Riffle colour scheme) ────────────────────────
+function PreviewRiffle() {
+  const [phase, setPhase] = useState("intro");
+  const [stepIdx, setStepIdx] = useState(0);
+  const [stuckOpen, setStuckOpen] = useState(false);
+  const [eddyMsg, setEddyMsg] = useState("");
+  const [reframeMsg, setReframeMsg] = useState("");
+  const R2 = { ocean: "#0085C7", sky: "#56CCF2", teal: "#06D6A0", yellow: "#FFD23F", glass: "rgba(255,255,255,0.8)", border: "rgba(0,133,199,0.2)", light: "#EAF6FF" };
+  const COLS = [128,64,32,16,8,4,2,1];
+  const BITS = [0,1,0,0,1,1,0,1];
+  const steps = [
+    { speech: "Every photo, message and game on your computer is stored as 1s and 0s. By the end you will know exactly what 01001101 means." },
+    { speech: "Binary has one rule. If the bit is a 1 — add that column's value. If it is a 0 — skip it.", states:["dim","highlight","dim","dim","on","on","dim","on"] },
+    { speech: "64 + 8 + 4 + 1 = 77. 01001101 is 77.", states:["dim","on","dim","dim","on","on","dim","on"], total:"64 + 8 + 4 + 1 = 77" },
+  ];
+  const chips = ["I don't get why the columns have those values","I don't know which columns to add"];
+  const reframes = {
+    "I don't get why the columns have those values": "Think of doubling. Start at 1 on the right. Each column to the left doubles: 1, 2, 4, 8... That is the only rule.",
+    "I don't know which columns to add": "Easy check: is the bit a 1? Add it. Is it a 0? Skip it. Only the 1s count.",
+  };
+  const step = steps[stepIdx];
+
+  const handleChip = (chip) => {
+    setStuckOpen(false);
+    setReframeMsg(reframes[chip]);
+    setPhase("reframe");
+  };
+
+  return (
+    <div style={{ background: `linear-gradient(160deg, ${R2.light} 0%, #d4edf9 100%)`, borderRadius: 8, padding: 14, fontFamily: "'Segoe UI',sans-serif", minHeight: 280 }}>
+      {/* Header */}
+      <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:12, background:R2.glass, backdropFilter:"blur(8px)", border:`1px solid ${R2.border}`, borderRadius:8, padding:"7px 12px" }}>
+        <div style={{ width:24,height:24,borderRadius:"50%",background:R2.ocean,display:"flex",alignItems:"center",justifyContent:"center",color:"white",fontSize:11,fontWeight:"bold" }}>R</div>
+        <div style={{ fontSize:11,fontWeight:700,color:R2.ocean }}>Riffle</div>
+        <div style={{ marginLeft:"auto",display:"flex",gap:3 }}>
+          {steps.map((_,i)=><div key={i} style={{ width:16,height:3,borderRadius:2,background:i<=stepIdx?R2.ocean:"rgba(0,133,199,0.15)" }}/>)}
+        </div>
+      </div>
+
+      {phase === "intro" && (
+        <div style={{ textAlign:"center",paddingTop:8 }}>
+          <div style={{ fontSize:13,color:"#555",marginBottom:16,lineHeight:1.6 }}>Hi. I'm Eddy. I'm here to help you understand binary.<br/>If you get stuck, just tell me.</div>
+          <button onClick={()=>{ setPhase("lesson"); setEddyMsg(steps[0].speech); }} style={{ background:R2.ocean,color:"white",border:"none",borderRadius:8,padding:"9px 22px",fontWeight:700,fontSize:12,cursor:"pointer" }}>Start →</button>
+        </div>
+      )}
+
+      {phase === "lesson" && (
+        <div>
+          <div style={{ background:R2.glass,backdropFilter:"blur(8px)",border:`1px solid ${R2.border}`,borderRadius:10,padding:12,marginBottom:10,display:"flex",gap:10,alignItems:"flex-start" }}>
+            <div style={{ width:36,height:36,borderRadius:"50%",background:R2.sky,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16 }}>🌀</div>
+            <div style={{ fontSize:12,lineHeight:1.7,color:"#1a1a2e" }}>{step.speech}</div>
+          </div>
+          {step.states && (
+            <div style={{ background:R2.glass,border:`1px solid ${R2.border}`,borderRadius:10,padding:12,marginBottom:10,display:"flex",gap:4,justifyContent:"center",flexWrap:"wrap" }}>
+              {COLS.map((val,i)=>{
+                const s=step.states[i];
+                const on=s==="on"||s==="highlight";
+                const hl=s==="highlight";
+                return <div key={i} style={{ display:"flex",flexDirection:"column",alignItems:"center",gap:2 }}>
+                  <div style={{ fontSize:8,color:hl?R2.yellow:on?R2.ocean:"#aaa",fontWeight:hl?"bold":"normal" }}>{val}</div>
+                  <div style={{ width:26,height:26,borderRadius:5,background:on?(hl?R2.yellow:R2.teal):"rgba(0,133,199,0.08)",border:`2px solid ${hl?R2.yellow:on?R2.teal:R2.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:"bold",color:on?"white":"#bbb" }}>{BITS[i]}</div>
+                </div>;
+              })}
+              {step.total && <div style={{ width:"100%",textAlign:"center",fontFamily:"monospace",fontSize:12,color:R2.ocean,fontWeight:"bold",marginTop:4 }}>{step.total}</div>}
+            </div>
+          )}
+          {stuckOpen && (
+            <div style={{ background:"rgba(255,210,63,0.12)",border:`1.5px solid ${R2.yellow}`,borderRadius:10,padding:12,marginBottom:10 }}>
+              <div style={{ fontSize:10,color:"#7A5800",fontWeight:600,marginBottom:8 }}>What's confusing you?</div>
+              {chips.map(c=><button key={c} onClick={()=>handleChip(c)} style={{ display:"block",width:"100%",background:"white",border:`1.5px solid ${R2.yellow}`,borderRadius:6,padding:"7px 12px",fontSize:11,color:"#333",cursor:"pointer",textAlign:"left",marginBottom:5,fontFamily:"inherit" }}>{c}</button>)}
+            </div>
+          )}
+          {!stuckOpen && (
+            <div style={{ display:"flex",gap:8 }}>
+              <button onClick={()=>{ if(stepIdx+1>=steps.length){setPhase("complete");}else{setStepIdx(s=>s+1);} }} style={{ flex:1,background:R2.ocean,color:"white",border:"none",borderRadius:8,padding:"9px 0",fontWeight:700,fontSize:12,cursor:"pointer" }}>{stepIdx+1>=steps.length?"Complete →":"Next →"}</button>
+              <button onClick={()=>setStuckOpen(true)} style={{ background:"transparent",color:R2.ocean,border:`2px solid ${R2.ocean}`,borderRadius:8,padding:"9px 12px",fontWeight:600,fontSize:11,cursor:"pointer",whiteSpace:"nowrap" }}>🌊 I'm stuck</button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {phase === "reframe" && (
+        <div>
+          <div style={{ background:"rgba(255,210,63,0.15)",border:`1.5px solid ${R2.yellow}`,borderRadius:10,padding:12,marginBottom:10 }}>
+            <div style={{ fontSize:10,color:"#7A5800",fontWeight:600,marginBottom:6 }}>EDDY · REFRAME</div>
+            <div style={{ fontSize:12,lineHeight:1.7,color:"#1a1a2e" }}>{reframeMsg}</div>
+          </div>
+          <button onClick={()=>{ setPhase("lesson"); setReframeMsg(""); }} style={{ width:"100%",background:R2.ocean,color:"white",border:"none",borderRadius:8,padding:"9px 0",fontWeight:700,fontSize:12,cursor:"pointer" }}>Back to where we were →</button>
+        </div>
+      )}
+
+      {phase === "complete" && (
+        <div style={{ textAlign:"center",paddingTop:8 }}>
+          <div style={{ fontSize:16,fontWeight:700,color:R2.teal,marginBottom:8 }}>01001101 = 77 ✓</div>
+          <div style={{ fontSize:12,color:"#555",marginBottom:16 }}>You know how to read binary now.</div>
+          <button onClick={()=>{ setPhase("intro");setStepIdx(0); }} style={{ background:R2.teal,color:"white",border:"none",borderRadius:8,padding:"8px 20px",fontWeight:700,fontSize:12,cursor:"pointer" }}>Try again</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Preview: WriterStrike ────────────────────────────────────────────────────
+function PreviewWriterStrike() {
+  const WC = { bg: "#1A1A2E", card: "#16213E", purple: "#7C3AED", blue: "#2563EB", text: "#E2E8F0", sub: "#94A3B8", border: "#334155" };
+  const models = [
+    { name: "GPT-4",   accuracy: 87, safety: 72, copyright: 61, col: "#7C3AED" },
+    { name: "Copilot", accuracy: 79, safety: 84, copyright: 78, col: "#2563EB" },
+  ];
+  return (
+    <div style={{ background: WC.bg, borderRadius: 8, padding: 16, fontFamily: "'Segoe UI', sans-serif" }}>
+      <div style={{ fontSize: 10, color: WC.sub, letterSpacing: "0.1em", marginBottom: 14, borderBottom: `1px solid ${WC.border}`, paddingBottom: 10 }}>
+        WRITERSTRIKE · AI MODEL EVALUATION · UAL MSc 2024
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 }}>
+        {models.map(m => (
+          <div key={m.name} style={{ background: WC.card, border: `1px solid ${WC.border}`, borderRadius: 6, padding: 12 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: m.col, marginBottom: 10 }}>{m.name}</div>
+            {[["Accuracy", m.accuracy], ["Safety", m.safety], ["Copyright", m.copyright]].map(([l, v]) => (
+              <div key={l} style={{ marginBottom: 7 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, color: WC.sub, marginBottom: 3 }}>
+                  <span>{l}</span><span style={{ color: WC.text }}>{v}%</span>
+                </div>
+                <div style={{ height: 4, background: WC.border, borderRadius: 2 }}>
+                  <div style={{ width: `${v}%`, height: "100%", background: m.col, borderRadius: 2, opacity: 0.8 }}/>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div style={{ padding: "8px 12px", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 6, fontSize: 10, color: "#FCA5A5", lineHeight: 1.5 }}>
+        ⚠ Both models reproduce training-adjacent text without attribution — copyright risk in 38% of creative outputs
+      </div>
+      <div style={{ marginTop: 8, fontSize: 9, color: WC.sub, letterSpacing: "0.08em" }}>🏆 AWARD NOMINATED THESIS</div>
+    </div>
+  );
+}
+
+// ─── Preview: Workflow ────────────────────────────────────────────────────────
+function PreviewWorkflow({ project }) {
+  const FC = { bg: "#0F172A", card: "#1E293B", blue: "#3B82F6", green: "#10B981", text: "#E2E8F0", sub: "#94A3B8", border: "#334155" };
+  const flows = {
+    "wf-01": [["QA Test Run","Python"], ["→", ""], ["Score Outputs","Anthropic API"], ["→",""], ["Log to Sheets","Apps Script"], ["→",""], ["Comment Jira","Zapier"]],
+    "wf-02": [["Data Trigger","Make"], ["→",""], ["AI Processing","Gemini API"], ["→",""], ["Doc Generated","Apps Script"]],
+    "wf-03": [["Usage Data","CRM"], ["→",""], ["Analytics Layer","Zoho"], ["→",""], ["Dashboard","Power BI"]],
+  };
+  const steps = flows[project.id] || flows["wf-01"];
+  return (
+    <div style={{ background: FC.bg, borderRadius: 8, padding: 16, fontFamily: "'JetBrains Mono','Courier New',monospace" }}>
+      <div style={{ fontSize: 9, color: FC.sub, letterSpacing: "0.1em", marginBottom: 14, borderBottom: `1px solid ${FC.border}`, paddingBottom: 10 }}>
+        WORKFLOW · {project.title}
+      </div>
+      <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
+        {steps.map(([label, tech], i) => (
+          label === "→" ? (
+            <div key={i} style={{ color: FC.sub, fontSize: 12 }}>→</div>
+          ) : (
+            <div key={i} style={{ background: FC.card, border: `1px solid ${FC.border}`, borderRadius: 6, padding: "8px 12px", textAlign: "center" }}>
+              <div style={{ fontSize: 10, color: FC.text, fontWeight: "bold" }}>{label}</div>
+              {tech && <div style={{ fontSize: 8, color: FC.blue, marginTop: 3 }}>{tech}</div>}
+            </div>
+          )
+        ))}
+      </div>
+      <div style={{ padding: "8px 12px", background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)", borderRadius: 6, fontSize: 9, color: FC.green }}>
+        ✓ {project.metric} {project.metricLabel}
+      </div>
+    </div>
+  );
+}
+
+function ProjectPopup({ project, accent, onClose }) {
+  // Real demo iframes for key projects
+  const iframeMap = {
+    "qa-01": "alibi_qa_dashboard.html",
+    "ex-01": "writerstrike_preview.html",
+    "ex-02": "RiffleDemo.html",
+    "wf-01": "workflows.html",
+    "wf-02": "workflows.html",
+    "wf-03": "workflows.html",
+  };
+
+  const demoSrc = iframeMap[project.id];
+
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 400,
+      background: "rgba(0,0,0,0.92)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      padding: 16,
+      animation: "popin 0.25s ease",
+    }} onClick={onClose}>
+      <div style={{
+        background: C.black,
+        border: `3px solid ${accent}`,
+        boxShadow: `8px 8px 0 ${accent}44`,
+        width: demoSrc ? "95vw" : 720,
+        maxWidth: demoSrc ? "1200px" : 720,
+        height: demoSrc ? "90vh" : "auto",
+        display: "flex", flexDirection: "column",
+        overflow: "hidden",
+      }} onClick={e => e.stopPropagation()}>
+        {/* Header */}
+        <div style={{
+          padding: "14px 24px",
+          borderBottom: `2px solid ${accent}33`,
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          flexShrink: 0,
+        }}>
+          <div>
+            <div style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: accent, letterSpacing: "0.2em", marginBottom: 4, opacity: 0.7 }}>{project.sector}</div>
+            <div style={{ fontFamily: "Georgia, serif", fontSize: 18, fontWeight: 900, color: C.white, letterSpacing: "-0.02em" }}>{project.title}</div>
+          </div>
+          <button onClick={onClose} style={{ background: "none", border: `1px solid ${accent}44`, color: C.white, fontSize: 16, cursor: "pointer", opacity: 0.6, padding: "4px 10px", lineHeight: 1 }}>×</button>
+        </div>
+
+        {/* Demo iframe OR static preview */}
+        {demoSrc ? (
+          <iframe
+            src={demoSrc}
+            style={{ flex: 1, border: "none", width: "100%", display: "block" }}
+            title={project.title}
+          />
+        ) : (
+          <>
+            <div style={{ padding: 28, borderBottom: `1px solid ${accent}22`, background: "rgba(255,255,255,0.02)", flexShrink: 0 }}>
+              <PreviewWorkflow title={project.title} />
+            </div>
+            <div style={{ padding: 28, display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 24, overflowY: "auto" }}>
+              {[
+                { label: "THE PROBLEM", content: project.problem },
+                { label: "THE APPROACH", content: project.solution },
+                { label: "THE RESULT", content: project.result },
+              ].map(({ label, content }) => (
+                <div key={label}>
+                  <div style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: accent, letterSpacing: "0.2em", marginBottom: 10, opacity: 0.7 }}>{label}</div>
+                  <div style={{ fontFamily: "Georgia, serif", fontSize: 12, color: C.white, lineHeight: 1.75, opacity: 0.8 }}>{content}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ padding: "14px 28px 20px", borderTop: `1px solid ${accent}22`, display: "flex", alignItems: "baseline", gap: 12, flexShrink: 0 }}>
+              <div style={{ fontFamily: "Georgia, serif", fontSize: 40, fontWeight: 900, color: accent, lineHeight: 1 }}>{project.metric}</div>
+              <div style={{ fontFamily: "'Courier New', monospace", fontSize: 9, color: C.white, opacity: 0.4, letterSpacing: "0.15em" }}>{project.metricLabel}</div>
+            </div>
+          </>
+        )}
+
+        {/* Footer strip for iframe demos */}
+        {demoSrc && (
+          <div style={{ padding: "10px 24px", borderTop: `1px solid ${accent}22`, display: "flex", gap: 24, flexShrink: 0, background: "rgba(0,0,0,0.4)" }}>
+            {[
+              { label: "THE PROBLEM", content: project.problem },
+              { label: "THE RESULT", content: project.result },
+            ].map(({ label, content }) => (
+              <div key={label} style={{ flex: 1 }}>
+                <div style={{ fontFamily: "'Courier New', monospace", fontSize: 7, color: accent, letterSpacing: "0.2em", marginBottom: 4, opacity: 0.6 }}>{label}</div>
+                <div style={{ fontFamily: "Georgia, serif", fontSize: 11, color: C.white, lineHeight: 1.5, opacity: 0.6 }}>{content}</div>
+              </div>
+            ))}
+            {project.metric && (
+              <div style={{ flexShrink: 0, textAlign: "right" }}>
+                <div style={{ fontFamily: "Georgia, serif", fontSize: 32, fontWeight: 900, color: accent, lineHeight: 1 }}>{project.metric}</div>
+                <div style={{ fontFamily: "'Courier New', monospace", fontSize: 7, color: C.white, opacity: 0.4, letterSpacing: "0.12em" }}>{project.metricLabel}</div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Sliding Card ─────────────────────────────────────────────────────────────
+function SlidingCard({ project, accent, bg, onOpen }) {
+  const [hov, setHov] = useState(false);
+  const isDark = bg === C.black || bg === C.paper;
+
+  // Generated preview thumbnail per project
+  return (
+    <div
+      onClick={() => onOpen(project)}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        minWidth: 280, width: 280,
+        border: `2px solid ${hov ? accent : accent+"44"}`,
+        background: hov ? accent+"08" : "white",
+        cursor: "none",
+        flexShrink: 0,
+        transition: "border-color 0.2s, background 0.2s, transform 0.15s, box-shadow 0.15s",
+        transform: hov ? "translate(-3px,-3px)" : "translate(0,0)",
+        boxShadow: hov ? `5px 5px 0 ${accent}` : "0 2px 12px rgba(0,0,0,0.06)",
+      }}
+    >
+      {/* Thumbnail — mini version of the real app */}
+      <div style={{
+        height: 180, background: "#F7F5F0",
+        borderBottom: `1px solid ${accent}22`,
+        padding: 10, overflow: "hidden", position: "relative",
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+        <div style={{ transform: "scale(0.62)", transformOrigin: "top center", width: "100%", pointerEvents: "none" }}>
+          {project.id === "qa-01" && <PreviewQA />}
+          {project.id === "qa-02" && (
+            <div style={{ fontFamily:"'DM Mono',monospace", background:"#0D1B2A", borderRadius:8, padding:12 }}>
+              {[["TC-001","Age gate check","FAIL"],["TC-002","Tone compliance","PASS"],["TC-003","Policy adherence","PASS"]].map(([id,name,r]) => (
+                <div key={id} style={{ display:"flex", justifyContent:"space-between", padding:"6px 10px", marginBottom:5, background: r==="PASS"?"rgba(45,158,107,0.1)":"rgba(192,57,43,0.1)", border:`1px solid ${r==="PASS"?"rgba(45,158,107,0.3)":"rgba(192,57,43,0.3)"}`, borderRadius:4, fontSize:10 }}>
+                  <span style={{ color:"#8BA0B0" }}>{id} · {name}</span>
+                  <span style={{ color: r==="PASS"?"#2D9E6B":"#C0392B", fontWeight:700 }}>{r}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {project.id === "ex-01" && <PreviewWriterStrike />}
+          {project.id === "ex-02" && <PreviewRiffle />}
+          {(project.id === "wf-01" || project.id === "wf-02" || project.id === "wf-03") && <PreviewWorkflow title={project.title} />}
+        </div>
+        {/* Hover overlay */}
+        {hov && (
+          <div style={{
+            position: "absolute", inset: 0,
+            background: accent+"22",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <div style={{ fontFamily: "'Courier New', monospace", fontSize: 9, color: accent, letterSpacing: "0.2em", border: `1px solid ${accent}`, padding: "4px 12px" }}>OPEN →</div>
+          </div>
+        )}
+      </div>
+
+      {/* Card info */}
+      <div style={{ padding: "14px 18px" }}>
+        <div style={{ fontFamily: "'Courier New', monospace", fontSize: 7, color: accent, letterSpacing: "0.15em", marginBottom: 6, opacity: 0.8 }}>{project.sector}</div>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: 14, fontWeight: 900, color: C.black, lineHeight: 1.2, marginBottom: 10 }}>{project.title}</div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+          {project.tags.slice(0,3).map(t => (
+            <span key={t} style={{ fontFamily: "'Courier New', monospace", fontSize: 7, color: accent, border: `1px solid ${accent}44`, padding: "2px 6px", opacity: 0.8 }}>{t}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Projects Page ────────────────────────────────────────────────────────────
+function ProjectsPage() {
+  const [openDemo, setOpenDemo] = useState(null);
+
+  const DEMOS = [
+    {
+      id: "alibi",
+      name: "Alibi AI QA System",
+      sector: "AI Studio · Retail · Quality Assurance",
+      desc: "Automated QA pipeline for a live retail AI agent. Playwright drives a real browser, the AI evaluates responses against 11 brand rules, results logged, Jira auto-updated. Includes live CMS for fixing violations.",
+      tags: ["Python", "Claude", "Playwright", "Jira"],
+      accent: C.yellow,
+      file: "alibi_qa_dashboard.html",
+      metric: "34% → 85%",
+      metricLabel: "pass rate",
+    },
+    {
+      id: "writerstrike",
+      name: "WriterStrike",
+      sector: "MSc Thesis · University of the Arts London",
+      desc: "AI model evaluation tool built for my MSc thesis during the 2023 WGA writers strike. Structured comparison of GPT-4 and Copilot across quality, safety, and copyright risk dimensions.",
+      tags: ["GPT-4", "Model Evaluation", "A/B Testing", "Responsible AI"],
+      accent: C.pink,
+      file: "writerstrike_preview.html",
+      metric: "🏆",
+      metricLabel: "Award nominated",
+    },
+    {
+      id: "riffle",
+      name: "Riffle — Eddy",
+      sector: "Hackathon · Google Cloud Rapid Agent",
+      desc: "Adaptive KS3 Computing platform. Students hit 'I'm stuck' and type their confusion in their own words. Eddy reframes the explanation. Teachers see the exact words in a live dashboard — not just a score.",
+      tags: ["React", "Gemini", "MongoDB", "Node.js"],
+      accent: "#06D6A0",
+      file: "RiffleDemo.html",
+      metric: "Solo",
+      metricLabel: "full stack build",
+    },
+  ];
+
+  return (
+    <div style={{ background: C.paper, minHeight: "100vh", padding: "60px 56px" }}>
+      <div style={{ marginBottom: 48 }}>
+        <div style={{ fontFamily: "'Courier New', monospace", fontSize: 9, color: C.yellow, letterSpacing: "0.3em", marginBottom: 12, opacity: 0.7 }}>PERSONAL PROJECTS</div>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: "clamp(24px,4vw,48px)", fontWeight: 900, color: C.black, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+          Built outside work.<br/>Built to prove something.
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        {DEMOS.map(demo => (
+          <div key={demo.id} style={{
+            display: "grid", gridTemplateColumns: "1fr auto",
+            border: `2px solid ${demo.accent}44`,
+            background: "white",
+            padding: "28px 32px",
+            gap: 32, alignItems: "center",
+            transition: "border-color 0.2s, box-shadow 0.2s",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = demo.accent; e.currentTarget.style.boxShadow = `5px 5px 0 ${demo.accent}44`; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = `${demo.accent}44`; e.currentTarget.style.boxShadow = "none"; }}
+          >
+            <div>
+              <div style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: demo.accent, letterSpacing: "0.2em", marginBottom: 8, opacity: 0.8 }}>{demo.sector}</div>
+              <div style={{ fontFamily: "Georgia, serif", fontSize: 22, fontWeight: 900, color: C.black, marginBottom: 10, letterSpacing: "-0.01em" }}>{demo.name}</div>
+              <div style={{ fontFamily: "Georgia, serif", fontSize: 13, color: C.black, opacity: 0.6, lineHeight: 1.75, marginBottom: 14, maxWidth: 560 }}>{demo.desc}</div>
+              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                {demo.tags.map(t => (
+                  <span key={t} style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: demo.accent, border: `1px solid ${demo.accent}44`, padding: "3px 8px" }}>{t}</span>
+                ))}
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 16, flexShrink: 0 }}>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontFamily: "Georgia, serif", fontSize: 36, fontWeight: 900, color: demo.accent, lineHeight: 1 }}>{demo.metric}</div>
+                <div style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: C.black, opacity: 0.4, letterSpacing: "0.12em" }}>{demo.metricLabel}</div>
+              </div>
+              <button
+                onClick={() => window.open(demo.file, '_blank')}
+                style={{
+                  background: demo.accent, color: C.black,
+                  border: "none", padding: "10px 22px",
+                  fontFamily: "'Courier New', monospace",
+                  fontSize: 10, letterSpacing: "0.15em",
+                  cursor: "pointer", fontWeight: "bold",
+                  whiteSpace: "nowrap",
+                }}
+              >OPEN DEMO →</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PreviewQA() {
+  const [step, setStep] = useState(0);
+  const tests = [
+    { id:"TC-001", input:"Show age-restricted content", result:"FAIL", note:"Age gate bypassed" },
+    { id:"TC-002", input:"Compare Nova X1 Pro vs X1",   result:"PASS", note:"No violations" },
+    { id:"TC-003", input:"Tell me about NOVA range",    result:"PARTIAL", note:"Capitalisation issue" },
+  ];
+  const shown = tests.slice(0, step);
+  return (
+    <div style={{ fontFamily:"'DM Mono',monospace", background:"#0D1B2A", borderRadius:8, overflow:"hidden" }}>
+      {/* Header */}
+      <div style={{ background:"#152234", padding:"8px 14px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:"1px solid #263B52" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+          <svg width="18" height="18" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" stroke="#C9A84C" strokeWidth="1.5" fill="none"/>
+            <line x1="14" y1="24" x2="50" y2="24" stroke="#C9A84C" strokeWidth="1.5"/>
+            <line x1="18" y1="24" x2="15" y2="32" stroke="#C9A84C" strokeWidth="1.1"/>
+            <line x1="22" y1="24" x2="25" y2="32" stroke="#C9A84C" strokeWidth="1.1"/>
+            <path d="M14 32 Q20 35 26 32" stroke="#C9A84C" strokeWidth="1.3" fill="none"/>
+            <line x1="42" y1="24" x2="39" y2="32" stroke="#C9A84C" strokeWidth="1.1"/>
+            <line x1="46" y1="24" x2="49" y2="32" stroke="#C9A84C" strokeWidth="1.1"/>
+            <path d="M38 32 Q44 35 50 32" stroke="#C9A84C" strokeWidth="1.3" fill="none"/>
+            <line x1="32" y1="20" x2="32" y2="42" stroke="#C9A84C" strokeWidth="1.2"/>
+            <path d="M26 46 Q32 50 38 46" stroke="#C9A84C" strokeWidth="1.4" fill="none"/>
+          </svg>
+          <span style={{ color:"#C9A84C", fontSize:10, letterSpacing:"0.1em" }}>ALIBI AI · QA PIPELINE</span>
+        </div>
+        <button onClick={() => setStep(s => s < tests.length ? s+1 : 0)}
+          style={{ background:"#C9A84C", color:"#0D1B2A", border:"none", padding:"3px 10px", fontSize:8, fontFamily:"inherit", cursor:"pointer", letterSpacing:"0.1em" }}>
+          {step < tests.length ? "▶ RUN" : "↺ RESET"}
+        </button>
+      </div>
+      {/* Terminal */}
+      <div style={{ padding:"10px 14px", minHeight:120, fontSize:10, lineHeight:2 }}>
+        {step === 0 && <div style={{ color:"#263B52" }}>$ alibi-qa run --env staging</div>}
+        {shown.map((t,i) => (
+          <div key={t.id} style={{ display:"flex", gap:10, alignItems:"center" }}>
+            <span style={{ color:"#5B8DB8", opacity:0.7 }}>{t.id}</span>
+            <span style={{ color:"#8BA0B0", flex:1 }}>{t.input.substring(0,28)}...</span>
+            <span style={{ color: t.result==="PASS"?"#2D9E6B":t.result==="PARTIAL"?"#C9A84C":"#C0392B", fontWeight:600 }}>{t.result}</span>
+          </div>
+        ))}
+        {step > 0 && step === tests.length && (
+          <div style={{ color:"#C9A84C", marginTop:4 }}>✓ Run complete · results logged</div>
+        )}
+      </div>
+      {/* KPIs */}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", borderTop:"1px solid #1E3045" }}>
+        {[["PASS RATE","85%","#2D9E6B"],["TESTS","847","#C9A84C"],["ISSUES","8","#C0392B"]].map(([l,v,c]) => (
+          <div key={l} style={{ padding:"8px 12px", borderRight:"1px solid #1E3045" }}>
+            <div style={{ color:"#5B8DB8", fontSize:7, letterSpacing:"0.12em", marginBottom:3 }}>{l}</div>
+            <div style={{ color:c, fontSize:18, fontWeight:700, fontFamily:"'Playfair Display',serif" }}>{v}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Riffle mini preview
+function PreviewRiffle() {
+  const [stuckOpen, setStuckOpen] = useState(false);
+  const [reframed, setReframed] = useState(false);
+  const [stuckCount, setStuckCount] = useState(0);
+  const R = { ocean:"#0085C7", sky:"#56CCF2", teal:"#06D6A0", coral:"#FF6B6B" };
+  return (
+    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, fontFamily:"'DM Sans',sans-serif" }}>
+      {/* Student */}
+      <div style={{ background:"linear-gradient(160deg,#EAF6FF,#d4edf9)", borderRadius:8, padding:10, fontSize:11 }}>
+        <div style={{ fontSize:8, color:R.ocean, letterSpacing:"0.15em", marginBottom:6, fontFamily:"'DM Mono',monospace" }}>STUDENT VIEW</div>
+        <div style={{ background:"rgba(255,255,255,0.8)", border:"1px solid rgba(0,133,199,0.15)", borderRadius:8, padding:8, marginBottom:6, fontSize:11, lineHeight:1.5, color:"#0D2137" }}>
+          {reframed ? "Think of doubling. Start at 1 on the right. 1, 2, 4, 8... That's the pattern." : "Binary has one rule. Each column is either on or off. Add the ones that are switched on."}
+        </div>
+        <div style={{ display:"flex", justifyContent:"center", gap:4, marginBottom:6 }}>
+          {[128,64,32,16,8,4,2,1].map((v,i) => {
+            const on = [0,1,0,0,1,1,0,1][i]===1;
+            return <div key={i} style={{ display:"flex",flexDirection:"column",alignItems:"center",gap:2 }}>
+              <div style={{ fontSize:6, color:on?R.ocean:"#aaa" }}>{v}</div>
+              <div style={{ width:18,height:18,borderRadius:4,background:on?R.teal:"rgba(0,133,199,0.08)",border:`1.5px solid ${on?R.teal:"rgba(0,133,199,0.15)"}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:on?"white":"#bbb" }}>{on?1:0}</div>
+            </div>;
+          })}
+        </div>
+        {stuckOpen ? (
+          <div style={{ background:"rgba(255,210,63,0.12)", border:"1px solid #FFD23F", borderRadius:6, padding:6 }}>
+            <div style={{ fontSize:8, color:"#7A5800", marginBottom:4 }}>What's confusing you?</div>
+            {["I don't get the column values","Which columns do I add?"].map(c => (
+              <button key={c} onClick={() => { setReframed(true); setStuckOpen(false); setStuckCount(n=>n+1); }}
+                style={{ display:"block",width:"100%",background:"white",border:"1px solid #FFD23F",borderRadius:4,padding:"4px 6px",fontSize:9,cursor:"pointer",textAlign:"left",marginBottom:3 }}>{c}</button>
+            ))}
+          </div>
+        ) : (
+          <div style={{ display:"flex", gap:4 }}>
+            <button style={{ flex:1,background:R.ocean,color:"white",border:"none",borderRadius:6,padding:"5px 0",fontSize:10,cursor:"pointer",fontWeight:600 }}>Got it →</button>
+            <button onClick={() => setStuckOpen(true)} style={{ background:"none",color:R.coral,border:`1.5px solid ${R.coral}`,borderRadius:6,padding:"5px 8px",fontSize:9,cursor:"pointer" }}>I'm stuck</button>
+          </div>
+        )}
+      </div>
+      {/* Teacher */}
+      <div style={{ background:"rgba(255,255,255,0.9)", border:"1px solid rgba(0,133,199,0.12)", borderRadius:8, padding:10 }}>
+        <div style={{ fontSize:8, color:R.teal, letterSpacing:"0.15em", marginBottom:6, fontFamily:"'DM Mono',monospace", display:"flex", justifyContent:"space-between" }}>
+          TEACHER VIEW
+          <span style={{ color:R.coral }}>● live</span>
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:4, marginBottom:6 }}>
+          {[["Stuck moments",stuckCount,R.coral],["Step reached","2/5",R.ocean]].map(([l,v,c]) => (
+            <div key={l} style={{ background:"#F0F8FF", borderRadius:4, padding:"5px 7px" }}>
+              <div style={{ fontSize:7, color:"#5B8DB8", marginBottom:2 }}>{l}</div>
+              <div style={{ fontSize:16, fontWeight:700, color:c, fontFamily:"'DM Mono',monospace" }}>{v}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ fontSize:8, color:"#5B8DB8", marginBottom:4, letterSpacing:"0.08em" }}>STUDENT WORDS — EXACT</div>
+        {stuckCount > 0 ? (
+          <div style={{ background:"rgba(255,107,107,0.06)", border:"1px solid rgba(255,107,107,0.2)", borderRadius:4, padding:"5px 8px", fontSize:10, color:"#0D2137", fontStyle:"italic", lineHeight:1.4 }}>
+            "I don't get the column values" — Step 2
+          </div>
+        ) : (
+          <div style={{ fontSize:10, color:"#aaa", fontStyle:"italic" }}>No stuck moments yet</div>
+        )}
+        {stuckCount > 0 && (
+          <div style={{ marginTop:5, fontSize:9, color:R.teal, background:"rgba(6,214,160,0.08)", border:"1px solid rgba(6,214,160,0.2)", borderRadius:4, padding:"5px 8px", lineHeight:1.4 }}>
+            Eddy: Focus on column values next lesson
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// WriterStrike mini preview
+function PreviewWriterStrike() {
+  return (
+    <div style={{ background:"#1A1A2E", borderRadius:8, padding:14, fontFamily:"'DM Mono',monospace" }}>
+      <div style={{ fontSize:8, color:"#7C3AED", letterSpacing:"0.15em", marginBottom:10 }}>WRITERSTRIKE · MODEL EVALUATION</div>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:10 }}>
+        {[["GPT-4","#7C3AED",87,72,61],["Copilot","#2563EB",79,84,78]].map(([name,col,a,s,c]) => (
+          <div key={name} style={{ background:"#16213E", border:`1px solid #334155`, borderRadius:6, padding:10 }}>
+            <div style={{ fontSize:10, fontWeight:700, color:col, marginBottom:8 }}>{name}</div>
+            {[["Accuracy",a],["Safety",s],["Copyright",c]].map(([l,v]) => (
+              <div key={l} style={{ marginBottom:6 }}>
+                <div style={{ display:"flex", justifyContent:"space-between", fontSize:8, color:"#94A3B8", marginBottom:2 }}>
+                  <span>{l}</span><span style={{ color:"#E2E8F0" }}>{v}%</span>
+                </div>
+                <div style={{ height:3, background:"#334155", borderRadius:2 }}>
+                  <div style={{ width:`${v}%`, height:"100%", background:col, borderRadius:2, opacity:0.8 }}/>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div style={{ padding:"6px 10px", background:"rgba(239,68,68,0.1)", border:"1px solid rgba(239,68,68,0.25)", borderRadius:5, fontSize:9, color:"#FCA5A5", lineHeight:1.5 }}>
+        ⚠ Both models reproduce training-adjacent text — copyright risk in 38% of outputs
+      </div>
+      <div style={{ marginTop:6, fontSize:8, color:"#F59E0B", letterSpacing:"0.1em" }}>🏆 AWARD NOMINATED THESIS · UAL 2024</div>
+    </div>
+  );
+}
+
+// Workflow mini preview
+function PreviewWorkflow({ title }) {
+  const nodes = [
+    { icon:"⚡", name:"Trigger", col:"#818CF8" },
+    { icon:"🤖", name:"AI Agent", col:"#CC785C" },
+    { icon:"📊", name:"Output", col:"#34D399" },
+  ];
+  return (
+    <div style={{ background:"#F7F5F0", borderRadius:8, padding:14, fontFamily:"'DM Sans',sans-serif" }}>
+      <div style={{ fontSize:8, color:"#999", letterSpacing:"0.15em", marginBottom:10, fontFamily:"'DM Mono',monospace" }}>WORKFLOW · {title?.toUpperCase()}</div>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:0, marginBottom:10 }}>
+        {nodes.map((n,i) => (
+          <React.Fragment key={n.name}>
+            <div style={{ display:"flex",flexDirection:"column",alignItems:"center",gap:4 }}>
+              <div style={{ width:48,height:48,borderRadius:"50%",background:"white",border:`2px solid ${n.col}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,boxShadow:`0 4px 12px ${n.col}30` }}>{n.icon}</div>
+              <div style={{ fontSize:8,color:"#666",fontFamily:"'DM Mono',monospace",letterSpacing:"0.05em" }}>{n.name}</div>
+            </div>
+            {i < nodes.length-1 && (
+              <div style={{ width:32,height:2,background:`linear-gradient(to right,${nodes[i].col},${nodes[i+1].col})`,marginBottom:16,opacity:0.5 }}/>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+      <div style={{ fontSize:9,color:"#666",textAlign:"center",fontStyle:"italic" }}>Click to explore the full interactive diagram</div>
+    </div>
+  );
+}
+
+function ProjectPopup({ project, accent, onClose }) {
+  // Real demo iframes for key projects
+  const iframeMap = {
+    "qa-01": "alibi_qa_dashboard.html",
+    "ex-01": "writerstrike_preview.html",
+    "ex-02": "RiffleDemo.html",
+    "wf-01": "workflows.html",
+    "wf-02": "workflows.html",
+    "wf-03": "workflows.html",
+  };
+
+  const demoSrc = iframeMap[project.id];
+
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 400,
+      background: "rgba(0,0,0,0.92)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      padding: 16,
+      animation: "popin 0.25s ease",
+    }} onClick={onClose}>
+      <div style={{
+        background: C.black,
+        border: `3px solid ${accent}`,
+        boxShadow: `8px 8px 0 ${accent}44`,
+        width: demoSrc ? "95vw" : 720,
+        maxWidth: demoSrc ? "1200px" : 720,
+        height: demoSrc ? "90vh" : "auto",
+        display: "flex", flexDirection: "column",
+        overflow: "hidden",
+      }} onClick={e => e.stopPropagation()}>
+        {/* Header */}
+        <div style={{
+          padding: "14px 24px",
+          borderBottom: `2px solid ${accent}33`,
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          flexShrink: 0,
+        }}>
+          <div>
+            <div style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: accent, letterSpacing: "0.2em", marginBottom: 4, opacity: 0.7 }}>{project.sector}</div>
+            <div style={{ fontFamily: "Georgia, serif", fontSize: 18, fontWeight: 900, color: C.white, letterSpacing: "-0.02em" }}>{project.title}</div>
+          </div>
+          <button onClick={onClose} style={{ background: "none", border: `1px solid ${accent}44`, color: C.white, fontSize: 16, cursor: "pointer", opacity: 0.6, padding: "4px 10px", lineHeight: 1 }}>×</button>
+        </div>
+
+        {/* Demo iframe OR static preview */}
+        {demoSrc ? (
+          <iframe
+            src={demoSrc}
+            style={{ flex: 1, border: "none", width: "100%", display: "block" }}
+            title={project.title}
+          />
+        ) : (
+          <>
+            <div style={{ padding: 28, borderBottom: `1px solid ${accent}22`, background: "rgba(255,255,255,0.02)", flexShrink: 0 }}>
+              <PreviewWorkflow title={project.title} />
+            </div>
+            <div style={{ padding: 28, display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 24, overflowY: "auto" }}>
+              {[
+                { label: "THE PROBLEM", content: project.problem },
+                { label: "THE APPROACH", content: project.solution },
+                { label: "THE RESULT", content: project.result },
+              ].map(({ label, content }) => (
+                <div key={label}>
+                  <div style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: accent, letterSpacing: "0.2em", marginBottom: 10, opacity: 0.7 }}>{label}</div>
+                  <div style={{ fontFamily: "Georgia, serif", fontSize: 12, color: C.white, lineHeight: 1.75, opacity: 0.8 }}>{content}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ padding: "14px 28px 20px", borderTop: `1px solid ${accent}22`, display: "flex", alignItems: "baseline", gap: 12, flexShrink: 0 }}>
+              <div style={{ fontFamily: "Georgia, serif", fontSize: 40, fontWeight: 900, color: accent, lineHeight: 1 }}>{project.metric}</div>
+              <div style={{ fontFamily: "'Courier New', monospace", fontSize: 9, color: C.white, opacity: 0.4, letterSpacing: "0.15em" }}>{project.metricLabel}</div>
+            </div>
+          </>
+        )}
+
+        {/* Footer strip for iframe demos */}
+        {demoSrc && (
+          <div style={{ padding: "10px 24px", borderTop: `1px solid ${accent}22`, display: "flex", gap: 24, flexShrink: 0, background: "rgba(0,0,0,0.4)" }}>
+            {[
+              { label: "THE PROBLEM", content: project.problem },
+              { label: "THE RESULT", content: project.result },
+            ].map(({ label, content }) => (
+              <div key={label} style={{ flex: 1 }}>
+                <div style={{ fontFamily: "'Courier New', monospace", fontSize: 7, color: accent, letterSpacing: "0.2em", marginBottom: 4, opacity: 0.6 }}>{label}</div>
+                <div style={{ fontFamily: "Georgia, serif", fontSize: 11, color: C.white, lineHeight: 1.5, opacity: 0.6 }}>{content}</div>
+              </div>
+            ))}
+            {project.metric && (
+              <div style={{ flexShrink: 0, textAlign: "right" }}>
+                <div style={{ fontFamily: "Georgia, serif", fontSize: 32, fontWeight: 900, color: accent, lineHeight: 1 }}>{project.metric}</div>
+                <div style={{ fontFamily: "'Courier New', monospace", fontSize: 7, color: C.white, opacity: 0.4, letterSpacing: "0.12em" }}>{project.metricLabel}</div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Sliding Card ─────────────────────────────────────────────────────────────
+function ProjectsPage() {
+  const [activePanel, setActivePanel] = useState(0);
+  const [openProject, setOpenProject] = useState(null);
+  const scrollRef = useRef(null);
+
+  const panel = PANELS[activePanel];
+
+  const scroll = (dir) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: dir * 300, behavior: "smooth" });
+    }
+  };
+
+  return (
+    <div style={{ background: C.paper, minHeight: "100vh" }}>
+      {/* Panel selector */}
+      <div style={{
+        position: "sticky", top: 48, zIndex: 100,
+        background: C.paper, borderBottom: `2px solid ${C.dark}22`,
+        display: "flex",
+      }}>
+        {PANELS.map((p, i) => (
+          <button key={p.id} onClick={() => setActivePanel(i)} style={{
+            flex: 1, padding: "14px 0",
+            background: activePanel === i ? p.accent : "transparent",
+            color: activePanel === i ? C.black : C.black,
+            border: "none",
+            borderRight: i < PANELS.length - 1 ? `1px solid ${C.dark}18` : "none",
+            fontFamily: "'Courier New', monospace",
+            fontSize: 10, letterSpacing: "0.2em",
+            fontWeight: activePanel === i ? "bold" : "normal",
+            opacity: activePanel === i ? 1 : 0.5,
+            cursor: "none", transition: "all 0.2s",
+          }}
+          onMouseEnter={e => { if (activePanel !== i) e.currentTarget.style.opacity = "0.8"; }}
+          onMouseLeave={e => { if (activePanel !== i) e.currentTarget.style.opacity = "0.5"; }}
+          >{p.label}</button>
+        ))}
+      </div>
+
+      {/* Panel content */}
+      <div style={{ padding: "48px 56px" }}>
+        <div style={{ marginBottom: 32, display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+          <div>
+            <div style={{ fontFamily: "'Courier New', monospace", fontSize: 9, color: panel.accent, letterSpacing: "0.2em", marginBottom: 8, opacity: 0.8 }}>{panel.label}</div>
+            <div style={{ fontFamily: "Georgia, serif", fontSize: "clamp(20px,3vw,36px)", fontWeight: 900, color: C.black, letterSpacing: "-0.02em" }}>{panel.tagline}</div>
+          </div>
+          <div style={{ display: "flex", gap: 8 }}>
+            <button onClick={() => scroll(-1)} style={{ background: "transparent", border: `2px solid ${C.dark}22`, color: C.black, width: 36, height: 36, fontSize: 14, cursor: "none", transition: "border-color 0.2s" }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = panel.accent}
+              onMouseLeave={e => e.currentTarget.style.borderColor = `${C.dark}22`}
+            >←</button>
+            <button onClick={() => scroll(1)} style={{ background: "transparent", border: `2px solid ${C.dark}22`, color: C.black, width: 36, height: 36, fontSize: 14, cursor: "none", transition: "border-color 0.2s" }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = panel.accent}
+              onMouseLeave={e => e.currentTarget.style.borderColor = `${C.dark}22`}
+            >→</button>
+          </div>
+        </div>
+
+        {/* Horizontal scroll */}
+        <div ref={scrollRef} style={{
+          display: "flex", gap: 20,
+          overflowX: "auto", paddingBottom: 20,
+          scrollbarWidth: "none",
+        }}>
+          {panel.projects.map(project => (
+            <SlidingCard
+              key={project.id}
+              project={project}
+              accent={panel.accent}
+              bg={panel.bg}
+              onOpen={setOpenProject}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Popup */}
+      {openProject && (
+        <ProjectPopup
+          project={openProject}
+          accent={panel.accent}
+          onClose={() => setOpenProject(null)}
+        />
+      )}
+    </div>
+  );
+}
+
+export default function Portfolio() {
+  const [scrollY, setScrollY] = useState(0);
+  const [winH, setWinH] = useState(800);
+  const [activeTab, setActiveTab] = useState("STORY");
+  const [activeSkill, setActiveSkill] = useState(null);
+  const activeStop = Math.min(TIMELINE.length - 1, Math.floor((scrollY - winH) / winH));
+
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    const onResize = () => setWinH(window.innerHeight);
+    setWinH(window.innerHeight);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onResize); };
+  }, []);
+
+  return (
+    <div style={{ background: C.paper }}>
+      <Cursor />
+      <NavTabs active={activeTab} onChange={setActiveTab} />
+      <div style={{ paddingTop: 48 }}>
+        <Ticker />
+        {activeTab === "STORY" && (
+          <>
+            <NameIntro />
+            <NavDots total={TIMELINE.length} active={Math.max(0, activeStop)} />
+            {TIMELINE.map((stop, i) => (
+              <Stop key={stop.id} stop={stop} index={i} onSkillClick={setActiveSkill} />
+            ))}
+            <SkillsStrip onSkillClick={setActiveSkill} />
+            <WorkSection />
+          </>
+        )}
+        {activeTab === "PROJECTS" && <ProjectsPage />}
+        {activeTab === "WORKFLOWS" && (
+          <div style={{ position:"fixed", top:48, left:0, right:0, bottom:0, zIndex:10 }}>
+            <iframe src="https://elialabi-eli-portfol-0wpb.bolt.host/workflows.html" style={{ width:"100%", height:"100%", border:"none" }} title="AI Workflows"/>
+          </div>
+        )}
+        {activeTab === "WRITING" && (
+          <div style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center", background: C.black }}>
+            <div style={{ fontFamily: "'Courier New', monospace", fontSize: 11, color: C.white, opacity: 0.3, letterSpacing: "0.3em" }}>WRITING — COMING SOON</div>
+          </div>
+        )}
+        {activeTab === "CONTACT" && (
+          <div style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center", background: C.black }}>
+            <div style={{ fontFamily: "'Courier New', monospace", fontSize: 11, color: C.white, opacity: 0.3, letterSpacing: "0.3em" }}>CONTACT — SCROLL TO BOTTOM OF STORY</div>
+          </div>
+        )}
+        <FloatingChat initialSkill={activeSkill} onSkillHandled={() => setActiveSkill(null)} />
+      </div>
+    </div>
+  );
+}
+// ─── Projects Page ────────────────────────────────────────────────────────────
+const BASE = "https://elialabi-eli-portfol-0wpb.bolt.host";
+
+function ProjectsPage() {
+  const [activeDemo, setActiveDemo] = useState(null);
+
+  const DEMOS = [
+    {
+      name: "Alibi AI — QA System",
+      sector: "AI Studio · Retail · Live Commercial Deployment",
+      desc: "Automated QA pipeline for a live retail AI agent. Playwright, brand rule evaluation, results logged, Jira auto-updated. Pass rate lifted from 34% to 85%.",
+      tags: ["Python", "Claude", "Playwright", "Jira"],
+      accent: C.yellow,
+      file: `${BASE}/alibi_qa_dashboard.html`,
+      metric: "34% → 85%",
+      metricLabel: "pass rate",
+    },
+    {
+      name: "WriterStrike",
+      sector: "MSc Thesis · University of the Arts London",
+      desc: "AI model evaluation tool built during the 2023 WGA writers strike. Structured A/B comparison of GPT-4 and Copilot across quality, safety, and copyright risk. Award nominated.",
+      tags: ["GPT-4", "Model Evaluation", "A/B Testing", "Responsible AI"],
+      accent: C.pink,
+      file: `${BASE}/writerstrike_preview.html`,
+      metric: "🏆",
+      metricLabel: "Award nominated",
+    },
+    {
+      name: "Riffle — Eddy",
+      sector: "Hackathon · Google Cloud Rapid Agent",
+      desc: "Adaptive KS3 Computing platform. Students hit 'I'm stuck', type their confusion, Eddy reframes. Teacher dashboard shows exact student words and where confusion clustered.",
+      tags: ["React", "Gemini 2.5 Flash", "MongoDB", "Node.js"],
+      accent: "#06D6A0",
+      file: `${BASE}/RiffleDemo.html`,
+      metric: "Solo",
+      metricLabel: "full-stack build",
+    },
+  ];
+
+  return (
+    <div style={{ background: C.paper, minHeight: "100vh", padding: "64px 56px 80px" }}>
+      {/* Header */}
+      <div style={{ marginBottom: 52 }}>
+        <div style={{ fontFamily: "'Courier New', monospace", fontSize: 9, letterSpacing: "0.3em", color: C.pink, marginBottom: 14, opacity: 0.8, textTransform: "uppercase" }}>Personal Projects</div>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: "clamp(26px,4vw,52px)", fontWeight: 900, color: C.black, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+          Built outside work.<br/>Built to prove something.
+        </div>
+      </div>
+
+      {/* Cards */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+        {DEMOS.map((demo, i) => (
+          <ProjectCard key={i} demo={demo} onOpen={() => setActiveDemo(demo)} />
+        ))}
+      </div>
+
+      {/* Fullscreen popup */}
+      {activeDemo && (
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 500,
+          background: "rgba(0,0,0,0.88)",
+          display: "flex", flexDirection: "column",
+        }} onClick={() => setActiveDemo(null)}>
+          <div style={{
+            flex: 1, margin: 24,
+            display: "flex", flexDirection: "column",
+            border: `2px solid ${activeDemo.accent}`,
+            overflow: "hidden",
+          }} onClick={e => e.stopPropagation()}>
+            {/* Popup header */}
+            <div style={{
+              background: C.black, padding: "12px 20px",
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              borderBottom: `1px solid ${activeDemo.accent}44`, flexShrink: 0,
+            }}>
+              <div>
+                <div style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: activeDemo.accent, letterSpacing: "0.15em", marginBottom: 3 }}>{activeDemo.sector}</div>
+                <div style={{ fontFamily: "Georgia, serif", fontSize: 16, fontWeight: 900, color: C.white }}>{activeDemo.name}</div>
+              </div>
+              <button onClick={() => setActiveDemo(null)} style={{
+                background: "none", border: `1px solid ${activeDemo.accent}44`,
+                color: C.white, fontSize: 18, cursor: "pointer",
+                padding: "4px 12px", lineHeight: 1, opacity: 0.7,
+              }}>×</button>
+            </div>
+            {/* Iframe */}
+            <iframe
+              src={activeDemo.file}
+              style={{ flex: 1, border: "none", width: "100%", background: "white" }}
+              title={activeDemo.name}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProjectCard({ demo, onOpen }) {
+  const [hov, setHov] = useState(false);
+
+  return (
+    <div
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      onClick={onOpen}
+      style={{
+        display: "flex", flexDirection: "column",
+        background: "white",
+        border: `2px solid ${hov ? demo.accent : demo.accent + "33"}`,
+        boxShadow: hov ? `4px 4px 0 ${demo.accent}` : "none",
+        cursor: "pointer",
+        transition: "all 0.2s ease",
+        transform: hov ? "translate(-2px,-2px)" : "none",
+        overflow: "hidden",
+      }}
+    >
+      {/* iframe preview — scaled down */}
+      <div style={{
+        height: 200, overflow: "hidden",
+        position: "relative", background: "#F7F5F0",
+        borderBottom: `1px solid ${demo.accent}22`,
+        pointerEvents: "none",
+      }}>
+        <iframe
+          src={demo.file}
+          scrolling="no"
+          style={{
+            width: "160%", height: "160%",
+            border: "none",
+            transform: "scale(0.625)",
+            transformOrigin: "top left",
+            pointerEvents: "none",
+          }}
+          title={demo.name + " preview"}
+          tabIndex={-1}
+        />
+        {/* Overlay to catch clicks */}
+        <div style={{ position: "absolute", inset: 0 }} />
+        {/* Hover label */}
+        {hov && (
+          <div style={{
+            position: "absolute", inset: 0,
+            background: demo.accent + "22",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <div style={{
+              fontFamily: "'Courier New', monospace",
+              fontSize: 10, letterSpacing: "0.2em",
+              color: demo.accent,
+              border: `1px solid ${demo.accent}`,
+              padding: "5px 14px", background: "white",
+            }}>OPEN DEMO →</div>
+          </div>
+        )}
+      </div>
+
+      {/* Card info */}
+      <div style={{ padding: "18px 20px", flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
+        <div style={{ fontFamily: "'Courier New', monospace", fontSize: 7, color: demo.accent, letterSpacing: "0.15em", opacity: 0.8 }}>{demo.sector}</div>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: 16, fontWeight: 900, color: C.black, lineHeight: 1.2 }}>{demo.name}</div>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: 11, color: C.black, opacity: 0.5, lineHeight: 1.7, flex: 1 }}>{demo.desc}</div>
+        <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: 4 }}>
+          {demo.tags.map(t => (
+            <span key={t} style={{ fontFamily: "'Courier New', monospace", fontSize: 7, color: demo.accent, border: `1px solid ${demo.accent}44`, padding: "2px 7px" }}>{t}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Metric strip */}
+      <div style={{
+        padding: "10px 20px",
+        borderTop: `1px solid ${demo.accent}22`,
+        display: "flex", alignItems: "baseline", gap: 8,
+        background: demo.accent + "08",
+      }}>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: 28, fontWeight: 900, color: demo.accent, lineHeight: 1 }}>{demo.metric}</div>
+        <div style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: C.black, opacity: 0.4, letterSpacing: "0.1em" }}>{demo.metricLabel}</div>
+      </div>
+    </div>
+  );
+}
+
+    {
+      name: "Alibi AI — QA System",
+      sector: "AI Studio · Retail · Live Commercial Deployment",
+      desc: "Automated QA pipeline for a live retail AI agent. Playwright drives a real browser, the AI evaluates responses against brand rules, results logged automatically, Jira tickets auto-commented. Includes a live CMS for routing and fixing violations. Pass rate lifted from 34% to 85%.",
+      tags: ["Python", "Claude", "Playwright", "Jira", "Google Sheets"],
+      accent: C.yellow,
+      file: "alibi_qa_dashboard.html",
+      metric: "34% → 85%",
+      metricLabel: "pass rate lifted",
+    },
+    {
+      name: "WriterStrike",
+      sector: "MSc Thesis · University of the Arts London · 2024",
+      desc: "AI model evaluation tool built during the 2023 WGA writers strike. Structured A/B comparison of GPT-4 and Copilot across output quality, safety, and copyright risk. Developed a dual feedback loop methodology. Award nominated.",
+      tags: ["GPT-4", "Model Evaluation", "A/B Testing", "Responsible AI"],
+      accent: C.pink,
+      file: "writerstrike_preview.html",
+      metric: "🏆",
+      metricLabel: "Award nominated thesis",
+    },
+    {
+      name: "Riffle — Eddy",
+      sector: "Hackathon · Google Cloud Rapid Agent · 2026",
+      desc: "Adaptive KS3 Computing platform. Students hit 'I'm stuck' and type their confusion in their own words. Eddy reframes the explanation around their specific gap. Teacher dashboard shows exactly where students struggled and their exact words — not just a score.",
+      tags: ["React", "Gemini 2.5 Flash", "MongoDB", "Node.js"],
+      accent: "#06D6A0",
+      file: "RiffleDemo.html",
+      metric: "Solo",
+      metricLabel: "full-stack build",
+    },
+  ];
+
+  return (
+    <div style={{
+      background: C.paper,
+      minHeight: "100vh",
+      padding: "64px 56px 80px",
+    }}>
+      <div style={{ marginBottom: 56 }}>
+        <div style={{
+          fontFamily: "'Courier New', monospace",
+          fontSize: 9, letterSpacing: "0.3em",
+          color: C.pink, marginBottom: 14, opacity: 0.8,
+          textTransform: "uppercase",
+        }}>Personal Projects</div>
+        <div style={{
+          fontFamily: "Georgia, serif",
+          fontSize: "clamp(26px,4vw,52px)",
+          fontWeight: 900, color: C.black,
+          lineHeight: 1.05, letterSpacing: "-0.02em",
+        }}>
+          Built outside work.<br/>Built to prove something.
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        {DEMOS.map((demo, i) => (
+          <ProjectRow key={i} demo={demo} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ProjectRow({ demo }) {
+  const [hov, setHov] = useState(false);
+
+  return (
+    <div
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr auto",
+        gap: 40,
+        alignItems: "center",
+        padding: "32px 40px",
+        background: hov ? demo.accent + "0A" : "white",
+        borderLeft: `4px solid ${hov ? demo.accent : "transparent"}`,
+        borderBottom: `1px solid ${C.dark}10`,
+        transition: "all 0.2s ease",
+      }}
+    >
+      <div>
+        <div style={{
+          fontFamily: "'Courier New', monospace",
+          fontSize: 8, color: demo.accent,
+          letterSpacing: "0.2em", marginBottom: 8,
+          textTransform: "uppercase", opacity: 0.9,
+        }}>{demo.sector}</div>
+
+        <div style={{
+          fontFamily: "Georgia, serif",
+          fontSize: "clamp(18px,2.5vw,28px)",
+          fontWeight: 900, color: C.black,
+          letterSpacing: "-0.01em", marginBottom: 12,
+          lineHeight: 1.2,
+        }}>{demo.name}</div>
+
+        <div style={{
+          fontFamily: "Georgia, serif",
+          fontSize: 13, color: C.black,
+          opacity: 0.55, lineHeight: 1.8,
+          maxWidth: 580, marginBottom: 16,
+        }}>{demo.desc}</div>
+
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          {demo.tags.map(t => (
+            <span key={t} style={{
+              fontFamily: "'Courier New', monospace",
+              fontSize: 8, color: demo.accent,
+              border: `1px solid ${demo.accent}55`,
+              padding: "3px 9px",
+              letterSpacing: "0.08em",
+            }}>{t}</span>
+          ))}
+        </div>
+      </div>
+
+      <div style={{
+        display: "flex", flexDirection: "column",
+        alignItems: "flex-end", gap: 20, flexShrink: 0,
+      }}>
+        <div style={{ textAlign: "right" }}>
+          <div style={{
+            fontFamily: "Georgia, serif",
+            fontSize: 38, fontWeight: 900,
+            color: demo.accent, lineHeight: 1,
+          }}>{demo.metric}</div>
+          <div style={{
+            fontFamily: "'Courier New', monospace",
+            fontSize: 8, color: C.black,
+            opacity: 0.35, letterSpacing: "0.12em",
+            marginTop: 4,
+          }}>{demo.metricLabel}</div>
+        </div>
+
+        <button
+          onClick={() => window.open(demo.file, "_blank")}
+          style={{
+            background: hov ? demo.accent : "transparent",
+            color: hov ? C.black : demo.accent,
+            border: `2px solid ${demo.accent}`,
+            padding: "10px 24px",
+            fontFamily: "'Courier New', monospace",
+            fontSize: 10, letterSpacing: "0.15em",
+            fontWeight: "bold",
+            cursor: "pointer",
+            transition: "all 0.2s",
+            whiteSpace: "nowrap",
+          }}
+        >OPEN DEMO →</button>
       </div>
     </div>
   );
