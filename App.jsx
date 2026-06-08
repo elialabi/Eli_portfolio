@@ -1467,7 +1467,7 @@ export default function Portfolio() {
             <div style={{ background:C.black, borderBottom:`2px solid ${C.yellow}33`, padding:"10px 32px", display:"flex", alignItems:"center", justifyContent:"space-between", flexShrink:0 }}>
               <div>
                 <div style={{ fontFamily:"'Courier New',monospace", fontSize:8, color:C.yellow, letterSpacing:"0.2em", opacity:0.7, marginBottom:3 }}>BUILT BY ELIZABETH ALABI</div>
-                <div style={{ fontFamily:"Georgia,serif", fontSize:15, fontWeight:900, color:C.white }}>AI Workflows — 10 systems I built and automated</div>
+                <div style={{ fontFamily:"Georgia,serif", fontSize:15, fontWeight:900, color:C.white }}>AI Workflows systems I built and automated</div>
               </div>
               <div style={{ fontFamily:"'Courier New',monospace", fontSize:9, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em" }}>Click any diagram · Arrow keys to slide</div>
             </div>
