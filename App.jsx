@@ -1039,7 +1039,7 @@ Career context: Elizabeth is an AI Operations Coordinator at an AI studio (secon
   }, []);
 
   return (
-    <div style={{ position: "fixed", bottom: 28, right: 28, zIndex: 500 }}>
+    <div style={{ position: "fixed", bottom: 120, right: 28, zIndex: 500 }}>
       {/* Speech bubble */}
       {bubble && !open && (
         <div style={{
@@ -2008,7 +2008,7 @@ function ProjectsPage() {
     }}>
       {/* Tab strip */}
       <div style={{
-        background:C.black, borderBottom:`1px solid rgba(255,255,255,0.08)`,
+        background:C.black, borderBottom:`1px solid ${C.blue}33`,
         padding:"0 32px", display:"flex", alignItems:"center",
         justifyContent:"space-between", height:44, flexShrink:0,
       }}>
@@ -2017,9 +2017,9 @@ function ProjectsPage() {
             <button key={i} onClick={() => setCurrent(i)} style={{
               fontFamily:"'Courier New',monospace", fontSize:9, letterSpacing:"0.15em",
               textTransform:"uppercase", padding:"0 20px", height:44, border:"none",
-              borderBottom:`2px solid ${i===current?d.accent:"transparent"}`,
-              background:"transparent",
-              color:i===current?d.accent:"rgba(255,255,255,0.3)",
+              borderBottom:`2px solid ${i===current ? "rgba(255,255,255,0.7)" : "transparent"}`,
+              background: i===current ? "rgba(255,255,255,0.04)" : "transparent",
+              color: i===current ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.3)",
               cursor:"pointer", transition:"all 0.2s",
             }}>{d.name}</button>
           ))}
@@ -2038,20 +2038,20 @@ function ProjectsPage() {
       {/* Description strip */}
       <div style={{
         background: "#0D0D0D",
-        borderBottom: `2px solid ${demo.accent}`,
+        borderBottom: `1px solid ${C.blue}44`,
         padding: "12px 32px",
         display: "flex", alignItems: "center", gap: 32,
         flexShrink: 0,
       }}>
         <div style={{ flex: 1 }}>
-          <div style={{ fontFamily:"'Courier New',monospace", fontSize:8, color:demo.accent, letterSpacing:"0.2em", marginBottom:4, opacity:0.8 }}>{demo.sector}</div>
+          <div style={{ fontFamily:"'Courier New',monospace", fontSize:8, color:C.blue, letterSpacing:"0.2em", marginBottom:4, opacity:0.9 }}>{demo.sector}</div>
           <div style={{ fontFamily:"Georgia,serif", fontSize:13, color:C.white, lineHeight:1.6, opacity:0.75, maxWidth:600 }}>{demo.desc}</div>
         </div>
         <div style={{ flexShrink:0, textAlign:"right" }}>
-          <div style={{ fontFamily:"'Courier New',monospace", fontSize:9, color:demo.accent, letterSpacing:"0.1em", marginBottom:6 }}>{demo.metric}</div>
+          <div style={{ fontFamily:"'Courier New',monospace", fontSize:9, color:C.blue, letterSpacing:"0.1em", marginBottom:6 }}>{demo.metric}</div>
           <div style={{ display:"flex", gap:5, flexWrap:"wrap", justifyContent:"flex-end" }}>
             {demo.tags.map(t => (
-              <span key={t} style={{ fontFamily:"'Courier New',monospace", fontSize:7, color:demo.accent, border:`1px solid ${demo.accent}44`, padding:"2px 8px" }}>{t}</span>
+              <span key={t} style={{ fontFamily:"'Courier New',monospace", fontSize:7, color:"rgba(255,255,255,0.5)", border:`1px solid rgba(255,255,255,0.2)`, padding:"2px 8px" }}>{t}</span>
             ))}
           </div>
         </div>
