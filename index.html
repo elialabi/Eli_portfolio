@@ -8,5 +8,31 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/main.jsx"></script>
+    <script>
+  var isMobile = window.innerWidth <= 900 || 
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
+    navigator.maxTouchPoints > 2;
+  
+  if (isMobile) {
+    document.getElementById('root').style.display = 'none';
+    document.body.innerHTML = `
+      <div style="background:#0D0D0D;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;text-align:center;font-family:Georgia,serif;">
+        <div style="font-size:48px;font-weight:900;color:white;line-height:0.9;margin-bottom:32px;">
+          <div>ELIZA</div>
+          <div style="color:#0057FF">BETH</div>
+          <div style="font-style:italic;font-weight:400;font-size:28px;color:#FF2D78;margin-top:4px">Alabi.</div>
+        </div>
+        <div style="width:40px;height:2px;background:#FFE600;margin:0 auto 28px"></div>
+        <div style="font-family:'Courier New',monospace;font-size:11px;color:white;opacity:0.6;line-height:1.8;letter-spacing:0.05em;margin-bottom:16px;">This portfolio is built for desktop.</div>
+        <div style="font-size:16px;color:white;line-height:1.6;margin-bottom:36px;opacity:0.8;font-style:italic;">Open it on your laptop<br/>for the full experience.</div>
+        <div style="border:1px solid rgba(255,230,0,0.3);padding:12px 16px;margin-bottom:28px;">
+          <div style="font-family:'Courier New',monospace;font-size:9px;color:#FFE600;letter-spacing:0.2em;margin-bottom:6px;">PORTFOLIO URL</div>
+          <div style="font-family:'Courier New',monospace;font-size:11px;color:white;opacity:0.7;word-break:break-all;">elialabi-eli-portfol-0wpb.bolt.host</div>
+        </div>
+        <a href="https://linkedin.com/in/elizabethalabi" style="display:block;border:1px solid rgba(0,87,255,0.4);padding:10px 20px;color:#0057FF;text-decoration:none;font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.15em;margin-bottom:10px;">LINKEDIN →</a>
+        <a href="mailto:elizabethjobs200079@gmail.com" style="display:block;border:1px solid rgba(255,255,255,0.2);padding:10px 20px;color:rgba(255,255,255,0.5);text-decoration:none;font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.15em;">EMAIL →</a>
+      </div>`;
+  }
+</script>
   </body>
 </html>
