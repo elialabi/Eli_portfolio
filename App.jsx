@@ -1476,37 +1476,53 @@ export default function Portfolio() {
         )}
         {activeTab === "WRITING" && (
           <div style={{ background: C.paper, minHeight: "100vh", padding: "64px 56px 80px" }}>
-            {/* Header */}
             <div style={{ marginBottom: 56 }}>
               <div style={{ fontFamily:"'Courier New',monospace", fontSize:9, letterSpacing:"0.3em", color:C.pink, marginBottom:14, opacity:0.8, textTransform:"uppercase" }}>Writing</div>
-              <div style={{ fontFamily:"Georgia,serif", fontSize:"clamp(26px,4vw,52px)", fontWeight:900, color:C.black, lineHeight:1.05, letterSpacing:"-0.02em" }}>
-                Things I think about.<br/><span style={{ fontStyle:"italic", fontWeight:400, color:C.pink }}>Coming soon.</span>
-              </div>
             </div>
-
-            {/* Articles */}
             <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
               {[
                 {
                   title: "GPT and GLP-1: What AI and Ozempic Tell Us About Society's Relationship With Cheating",
                   category: "AI · Culture · Society",
-                  preview: "In the same eighteen months that ChatGPT went from curiosity to ubiquity, Ozempic went from diabetes medication to cultural flashpoint. Both sparked the same conversation: is this cheating? Both exposed the same anxiety: that if the shortcut works, it invalidates the effort. We don't ask whether a calculator is cheating at maths. We don't ask whether a dishwasher is cheating at housework. But tell someone you used AI to draft an email or a weight loss drug to lose three stone and watch the room shift.",
                   time: "6 min read",
                 },
                 {
                   title: "Are We Scared of AI — Or the Humanisation of It?",
                   category: "AI · Philosophy · Technology",
-                  preview: "The robots-taking-jobs conversation has been running since the Industrial Revolution. We've always survived it, and we'll survive this one too. But something about this wave of AI feels different — and I don't think it's the capability. I think it's the face. When AI systems are given names, personalities, voices that pause and breathe, opinions that hedge and qualify, the threat stops feeling economic and starts feeling existential. We're not scared of the tool. We're scared of what it says about us that we can't always tell the difference.",
                   time: "7 min read",
                 },
                 {
                   title: '"You\'re Really Pale, Are You Alright?" Why Medical Data\'s Diversity Problem Is Hiding in Plain Sight',
                   category: "Health · Data · Race",
-                  preview: '"You\'re really pale" is a phrase most people have heard said with concern — a friend, a parent, a GP noticing something looks off. It\'s everyday diagnostic language. It works because paleness is visible, readable, recognised. But that recognition is built into centuries of medicine designed around lighter skin. When a pulse oximeter reads blood oxygen levels, when a pain scale was designed, when machine learning models are trained on medical imaging — the data skews. The language of illness was never written for everyone. And that gap shows up in outcomes.',
                   time: "8 min read",
                 },
               ].map((article, i) => (
-                <WritingCard key={i} article={article} index={i} />
+                <div key={i} style={{ borderBottom:`1px solid ${C.dark}`, padding:"36px 0", position:"relative", overflow:"hidden" }}>
+                  {/* Category + read time */}
+                  <div style={{ display:"flex", justifyContent:"space-between", marginBottom:12 }}>
+                    <div style={{ fontFamily:"'Courier New',monospace", fontSize:9, letterSpacing:"0.2em", color:C.pink, textTransform:"uppercase", opacity:0.8 }}>{article.category}</div>
+                    <div style={{ fontFamily:"'Courier New',monospace", fontSize:9, color:C.black, opacity:0.35 }}>{article.time}</div>
+                  </div>
+
+                  {/* Title */}
+                  <div style={{ fontFamily:"Georgia,serif", fontSize:"clamp(18px,2.5vw,30px)", fontWeight:900, color:C.black, lineHeight:1.2, letterSpacing:"-0.02em", maxWidth:720, marginBottom:20 }}>
+                    {article.title}
+                  </div>
+
+                  {/* Blurred content placeholder */}
+                  <div style={{ position:"relative", overflow:"hidden", height:80 }}>
+                    <div style={{ fontFamily:"Georgia,serif", fontSize:14, color:C.black, lineHeight:1.8, opacity:0.6, filter:"blur(4px)", userSelect:"none" }}>
+                      {"█".repeat(60) + " " + "█".repeat(45) + " " + "█".repeat(52) + " " + "█".repeat(38)}
+                    </div>
+                    <div style={{ position:"absolute", inset:0, background:`linear-gradient(to bottom, ${C.paper}88 0%, ${C.paper} 70%)` }} />
+                  </div>
+
+                  {/* Coming soon */}
+                  <div style={{ display:"inline-flex", alignItems:"center", gap:8, border:`1px solid ${C.black}44`, padding:"6px 14px", fontFamily:"'Courier New',monospace", fontSize:8, letterSpacing:"0.2em", color:C.black, opacity:0.4 }}>
+                    <div style={{ width:5, height:5, borderRadius:"50%", background:C.pink, animation:"pulse 2s ease-in-out infinite" }} />
+                    Coming soon
+                  </div>
+                </div>
               ))}
             </div>
           </div>
