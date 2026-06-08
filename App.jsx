@@ -1347,6 +1347,81 @@ function WorkSection() {
 }
 
 // ─── Root ─────────────────────────────────────────────────────────────────────
+// ─── Writing Card ─────────────────────────────────────────────────────────────
+function WritingCard({ article, index }) {
+  return (
+    <div style={{
+      borderBottom: `1px solid ${C.dark}`,
+      padding: "40px 0",
+      position: "relative",
+      overflow: "hidden",
+    }}>
+      {/* Category + read time */}
+      <div style={{
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        marginBottom: 12,
+      }}>
+        <div style={{
+          fontFamily: "'Courier New', monospace",
+          fontSize: 9, letterSpacing: "0.2em",
+          color: C.pink, textTransform: "uppercase", opacity: 0.8,
+        }}>{article.category}</div>
+        <div style={{
+          fontFamily: "'Courier New', monospace",
+          fontSize: 9, color: C.black, opacity: 0.35, letterSpacing: "0.1em",
+        }}>{article.time}</div>
+      </div>
+
+      {/* Title */}
+      <div style={{
+        fontFamily: "Georgia, serif",
+        fontSize: "clamp(18px,2.5vw,32px)",
+        fontWeight: 900, color: C.black,
+        lineHeight: 1.15, letterSpacing: "-0.02em",
+        marginBottom: 16, maxWidth: 720,
+      }}>{article.title}</div>
+
+      {/* Preview text with blur fade */}
+      <div style={{ position: "relative", maxWidth: 680 }}>
+        <div style={{
+          fontFamily: "Georgia, serif",
+          fontSize: 14, color: C.black,
+          lineHeight: 1.8, opacity: 0.7,
+        }}>{article.preview}</div>
+
+        {/* Blur overlay — gradient then frosted */}
+        <div style={{
+          position: "absolute",
+          bottom: 0, left: 0, right: 0,
+          height: "75%",
+          background: `linear-gradient(to bottom, transparent 0%, ${C.paper} 100%)`,
+          pointerEvents: "none",
+        }} />
+      </div>
+
+      {/* Coming soon pill */}
+      <div style={{
+        display: "inline-flex", alignItems: "center", gap: 8,
+        marginTop: 16,
+        border: `2px solid ${C.black}`,
+        padding: "8px 18px",
+        fontFamily: "'Courier New', monospace",
+        fontSize: 9, letterSpacing: "0.2em",
+        color: C.black, textTransform: "uppercase",
+        opacity: 0.5,
+      }}>
+        <div style={{
+          width: 6, height: 6, borderRadius: "50%",
+          background: C.pink,
+          animation: "pulse 2s ease-in-out infinite",
+        }} />
+        Coming soon
+      </div>
+    </div>
+  );
+}
+
+
 export default function Portfolio() {
   const [scrollY, setScrollY] = useState(0);
   const [winH, setWinH] = useState(800);
@@ -1400,16 +1475,40 @@ export default function Portfolio() {
           </div>
         )}
         {activeTab === "WRITING" && (
-          <div style={{
-            minHeight: "80vh", display: "flex",
-            alignItems: "center", justifyContent: "center",
-            background: C.black,
-          }}>
-            <div style={{
-              fontFamily: "'Courier New', monospace",
-              fontSize: 11, color: C.white,
-              opacity: 0.3, letterSpacing: "0.3em",
-            }}>WRITING — COMING SOON</div>
+          <div style={{ background: C.paper, minHeight: "100vh", padding: "64px 56px 80px" }}>
+            {/* Header */}
+            <div style={{ marginBottom: 56 }}>
+              <div style={{ fontFamily:"'Courier New',monospace", fontSize:9, letterSpacing:"0.3em", color:C.pink, marginBottom:14, opacity:0.8, textTransform:"uppercase" }}>Writing</div>
+              <div style={{ fontFamily:"Georgia,serif", fontSize:"clamp(26px,4vw,52px)", fontWeight:900, color:C.black, lineHeight:1.05, letterSpacing:"-0.02em" }}>
+                Things I think about.<br/><span style={{ fontStyle:"italic", fontWeight:400, color:C.pink }}>Coming soon.</span>
+              </div>
+            </div>
+
+            {/* Articles */}
+            <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
+              {[
+                {
+                  title: "GPT and GLP-1: What AI and Ozempic Tell Us About Society's Relationship With Cheating",
+                  category: "AI · Culture · Society",
+                  preview: "In the same eighteen months that ChatGPT went from curiosity to ubiquity, Ozempic went from diabetes medication to cultural flashpoint. Both sparked the same conversation: is this cheating? Both exposed the same anxiety: that if the shortcut works, it invalidates the effort. We don't ask whether a calculator is cheating at maths. We don't ask whether a dishwasher is cheating at housework. But tell someone you used AI to draft an email or a weight loss drug to lose three stone and watch the room shift.",
+                  time: "6 min read",
+                },
+                {
+                  title: "Are We Scared of AI — Or the Humanisation of It?",
+                  category: "AI · Philosophy · Technology",
+                  preview: "The robots-taking-jobs conversation has been running since the Industrial Revolution. We've always survived it, and we'll survive this one too. But something about this wave of AI feels different — and I don't think it's the capability. I think it's the face. When AI systems are given names, personalities, voices that pause and breathe, opinions that hedge and qualify, the threat stops feeling economic and starts feeling existential. We're not scared of the tool. We're scared of what it says about us that we can't always tell the difference.",
+                  time: "7 min read",
+                },
+                {
+                  title: '"You\'re Really Pale, Are You Alright?" Why Medical Data\'s Diversity Problem Is Hiding in Plain Sight',
+                  category: "Health · Data · Race",
+                  preview: '"You\'re really pale" is a phrase most people have heard said with concern — a friend, a parent, a GP noticing something looks off. It\'s everyday diagnostic language. It works because paleness is visible, readable, recognised. But that recognition is built into centuries of medicine designed around lighter skin. When a pulse oximeter reads blood oxygen levels, when a pain scale was designed, when machine learning models are trained on medical imaging — the data skews. The language of illness was never written for everyone. And that gap shows up in outcomes.',
+                  time: "8 min read",
+                },
+              ].map((article, i) => (
+                <WritingCard key={i} article={article} index={i} />
+              ))}
+            </div>
           </div>
         )}
 
