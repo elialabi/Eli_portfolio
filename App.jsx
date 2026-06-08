@@ -86,12 +86,14 @@ const ALL_SKILLS = [
 
 function useIsMobile() {
   const check = () => {
-    const byWidth = window.innerWidth < 768;
-    const byAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    return byWidth || byAgent;
+    const byWidth = window.innerWidth <= 900;
+    const byAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(navigator.userAgent);
+    const byTouch = navigator.maxTouchPoints > 2;
+    return byWidth || byAgent || byTouch;
   };
   const [isMobile, setIsMobile] = useState(check);
   useEffect(() => {
+    setIsMobile(check());
     const handler = () => setIsMobile(check());
     window.addEventListener('resize', handler);
     return () => window.removeEventListener('resize', handler);
@@ -976,7 +978,7 @@ const CHIPS = [
 const CHIP_RESPONSES = {
   "What do you actually do?": "Elizabeth makes AI work for people, not the other way around. Day to day that means designing and evaluating AI agents, building QA frameworks, running adoption programmes, and writing system prompts. Right now she's across four live client deployments simultaneously.",
   "What makes you different?": "Elizabeth sits at the intersection of the technical and the human. She can write a system prompt and run a workshop, build a QA pipeline and present the findings to a board. Most people do one or the other. She does both — and she understands why both matter.",
-  "What are you open to?": "Elizabeth is open to AI Adoption, Enablement, Operations, or Consulting roles. Ideally somewhere she can shape how an organisation thinks about and uses AI, not just implement someone else's playbook. £42–55k+ range. Open to hybrid and remote. Based in London, relocating to Manchester end of 2026.",
+  "What are you open to?": "Elizabeth is open to AI Adoption, Enablement, Operations, or Consulting roles. Ideally somewhere she can shape how an organisation thinks about and uses AI, not just implement someone else's playbook. Open to hybrid and remote. Based in London, relocating to Manchester end of 2026.",
   "How was this built?": "This chatbot uses a RAG-inspired architecture — Elizabeth's career knowledge is stored as a curated static knowledge base (the foundation layer), and the Anthropic API adds dynamic reasoning on top. If the API is unavailable for any reason, it falls back to the static data seamlessly — it never breaks. Clicking any skill tag fires a contextual query about that skill. The portfolio itself is built in React from scratch, no templates. Hosted on Vercel.",
 };
 
@@ -1047,42 +1049,8 @@ Career context: Elizabeth is an AI Operations Coordinator at an AI studio (secon
 
   const handleReset = () => setMessages([]);
 
-  const [bubble, setBubble] = useState(false);
-  const [bubbleDone, setBubbleDone] = useState(false);
-
-  useEffect(() => {
-    if (bubbleDone) return;
-    const t1 = setTimeout(() => setBubble(true), 3000);
-    const t2 = setTimeout(() => { setBubble(false); setBubbleDone(true); }, 7000);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, []);
-
   return (
     <div style={{ position: "fixed", bottom: 100, right: 16, zIndex: 500 }}>
-      {/* Speech bubble */}
-      {bubble && !open && (
-        <div style={{
-          position: "absolute", bottom: 64, right: 0,
-          background: C.black, color: C.white,
-          padding: "10px 16px",
-          fontFamily: "'Courier New', monospace",
-          fontSize: 10, letterSpacing: "0.08em",
-          whiteSpace: "nowrap",
-          border: `2px solid ${C.yellow}`,
-          boxShadow: `3px 3px 0 ${C.yellow}`,
-          animation: "popin 0.3s cubic-bezier(0.16,1,0.3,1)",
-        }}>
-          Click any skill tag to learn more →
-          {/* Tail */}
-          <div style={{
-            position: "absolute", bottom: -8, right: 20,
-            width: 0, height: 0,
-            borderLeft: "6px solid transparent",
-            borderRight: "6px solid transparent",
-            borderTop: `8px solid ${C.yellow}`,
-          }}/>
-        </div>
-      )}
 
       {open && (
         <div style={{
@@ -1487,7 +1455,7 @@ export default function Portfolio() {
             <div style={{ background:C.black, borderBottom:`2px solid ${C.yellow}33`, padding:"10px 32px", display:"flex", alignItems:"center", justifyContent:"space-between", flexShrink:0 }}>
               <div>
                 <div style={{ fontFamily:"'Courier New',monospace", fontSize:8, color:C.yellow, letterSpacing:"0.2em", opacity:0.7, marginBottom:3 }}>BUILT BY ELIZABETH ALABI</div>
-                <div style={{ fontFamily:"Georgia,serif", fontSize:15, fontWeight:900, color:C.white }}>AI Workflows — 10 systems I built and automated</div>
+                <div style={{ fontFamily:"Georgia,serif", fontSize:15, fontWeight:900, color:C.white }}>Workflow systems I've built</div>
               </div>
               <div style={{ fontFamily:"'Courier New',monospace", fontSize:9, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em" }}>Click any diagram · Arrow keys to slide</div>
             </div>
