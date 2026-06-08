@@ -21,6 +21,7 @@ const TIMELINE = [
     body: "I studied law because I wanted to understand how systems work and who they protect. Digital rights, IP, copyright — the legal edges of technology. It shaped how I think about AI today.",
     skills: ["Critical thinking", "Digital rights", "IP & copyright", "Ethical frameworks"],
     bg: C.paper, accent: C.burgundy, imgColor: C.burgundy, pattern: "scales",
+    org: "University of Liverpool", orgType: "LLB Law", years: "2016 — 2019",
   },
   {
     id: "02",
@@ -29,6 +30,7 @@ const TIMELINE = [
     body: "I spent two years helping a global user base navigate complex software. Live demos, onboarding calls, training sessions. I learned that the gap between a good tool and an adopted tool is almost always about people, not product.",
     skills: ["User empathy", "Platform training", "Onboarding", "Zoho CRM", "Freshdesk", "Feedback loops"],
     bg: C.dark, accent: C.blue, imgColor: C.blue, pattern: "human",
+    org: "Benivo", orgType: "Customer Operations Specialist", years: "2019 — 2021",
   },
   {
     id: "03",
@@ -37,6 +39,7 @@ const TIMELINE = [
     body: "Data Science and AI at UAL — where the curriculum asked not just how models work, but what they're responsible for. My thesis examined AI and creative rights during the 2023 writers strike. I evaluated models, tested outputs, and got into the detail of what responsible AI actually looks like in practice.",
     skills: ["Model evaluation", "Prompt engineering", "Responsible AI", "GPT-4", "A/B testing", "Research"],
     bg: C.black, accent: C.pink, imgColor: C.pink, pattern: "split",
+    org: "University of the Arts London", orgType: "MSc Data Science & AI", years: "2022 — 2024",
   },
   {
     id: "04",
@@ -45,6 +48,7 @@ const TIMELINE = [
     body: "I built and ran an AI adoption programme for 300 professionals across three regions. Strategy, diagnostic assessments, workshops, champion networks, Power BI tracking. This is where I learned that behaviour change is the hardest part of any AI rollout.",
     skills: ["Programme design", "Microsoft Copilot", "Champion networks", "Power BI", "DAX", "Workshop delivery", "Azure SQL"],
     bg: C.blue, accent: C.yellow, imgColor: C.yellow, pattern: "linegraph",
+    org: "Wellington Management", orgType: "Technology Associate", years: "2023 — 2024",
   },
   {
     id: "05",
@@ -53,6 +57,7 @@ const TIMELINE = [
     body: "Live AI agents in real commercial environments. Four clients simultaneously. I do QA, prompt engineering, automation pipelines, tool evaluation, and weekly briefings. I build the systems that make AI usable, not just possible.",
     skills: ["Prompt engineering", "QA frameworks", "Playwright", "Python", "Anthropic API", "Zapier", "Google Apps Script", "Agent deployment"],
     bg: C.black, accent: C.yellow, imgColor: C.yellow, pattern: "terminal",
+    org: "Cyphr Studio", orgType: "AI Operations Coordinator", years: "2024 — Present",
   },
   {
     id: "06",
@@ -61,6 +66,7 @@ const TIMELINE = [
     body: "I know what I do and why it matters. I sit at the intersection of the technical and the human. Looking for the right place to do it properly.",
     skills: [],
     bg: C.pink, accent: C.black, imgColor: C.black, pattern: "none",
+    org: null, orgType: null, years: null,
   },
 ];
 
@@ -138,8 +144,9 @@ function Ticker() {
     <div style={{
       background: C.black, color: C.yellow,
       fontFamily: "'Courier New', monospace",
-      fontSize: 11, letterSpacing: "0.14em",
-      padding: "7px 0", overflow: "hidden", whiteSpace: "nowrap", userSelect: "none",
+      fontSize: 13, letterSpacing: "0.18em",
+      padding: "10px 0", overflow: "hidden", whiteSpace: "nowrap", userSelect: "none",
+      fontWeight: "600",
     }}>
       <span style={{ display: "inline-block", animation: "ticker 22s linear infinite" }}>{full}</span>
       <style>{`
@@ -688,6 +695,54 @@ function Stop({ stop, index, onSkillClick }) {
         pointerEvents: "none",
       }} />
 
+      {/* Org badge — top of image side, connected to centre line */}
+      {stop.org && (
+        <div style={{
+          position: "absolute",
+          top: 80,
+          // Image is on right for even, left for odd
+          // Badge sits just past the centre line toward the image side
+          left: isEven ? "50%" : "auto",
+          right: isEven ? "auto" : "50%",
+          zIndex: 5,
+          opacity: inView ? 1 : 0,
+          transform: inView ? "translateY(0)" : "translateY(-10px)",
+          transition: "opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s",
+          pointerEvents: "none",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: isEven ? "row" : "row-reverse",
+        }}>
+          {/* Dot on the line */}
+          <div style={{
+            width: 10, height: 10, borderRadius: "50%",
+            background: stop.accent,
+            flexShrink: 0,
+            boxShadow: `0 0 0 3px ${isDark ? stop.bg : C.paper}, 0 0 0 5px ${stop.accent}44`,
+          }} />
+          {/* Badge */}
+          <div style={{
+            background: stop.accent,
+            padding: "8px 14px",
+            marginLeft: isEven ? 8 : 0,
+            marginRight: isEven ? 0 : 8,
+            whiteSpace: "nowrap",
+            boxShadow: `3px 3px 0 ${stop.accent}44`,
+          }}>
+            <div style={{
+              fontFamily: "'Courier New', monospace",
+              fontSize: 11, letterSpacing: "0.1em",
+              color: C.black, fontWeight: "bold", marginBottom: 2,
+            }}>{stop.org}</div>
+            <div style={{
+              fontFamily: "'Courier New', monospace",
+              fontSize: 9, letterSpacing: "0.07em",
+              color: C.black, opacity: 0.75,
+            }}>{stop.orgType} · {stop.years}</div>
+          </div>
+        </div>
+      )}
+
       {/* Colour bleed */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0, height: 80,
@@ -729,10 +784,15 @@ function Stop({ stop, index, onSkillClick }) {
         }}>{stop.body}</div>
 
         {stop.skills.length > 0 && (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {stop.skills.map((s, i) => (
-              <SkillTag key={s} label={s} bg={stop.bg} delay={500 + i * 130} inView={inView} onSkillClick={onSkillClick} />
-            ))}
+          <div>
+            <div style={{
+              display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 10,
+            }}>
+              {stop.skills.map((s, i) => (
+                <SkillTag key={s} label={s} bg={stop.bg} delay={500 + i * 130} inView={inView} onSkillClick={onSkillClick} />
+              ))}
+            </div>
+
           </div>
         )}
 
@@ -1101,6 +1161,34 @@ Career context: Elizabeth is an AI Operations Coordinator at an AI studio (secon
         </div>
       )}
 
+      {/* Skill nudge bubble — shows when chat is closed */}
+      {!open && (
+        <div style={{
+          position: "absolute", bottom: 64, right: 0,
+          background: C.black, border: `2px solid ${C.pink}`,
+          padding: "8px 12px", whiteSpace: "nowrap",
+          boxShadow: `3px 3px 0 ${C.pink}`,
+          animation: "floatY 3s ease-in-out infinite",
+        }}>
+          <div style={{
+            fontFamily: "'Courier New', monospace",
+            fontSize: 9, color: C.pink, letterSpacing: "0.1em",
+            marginBottom: 2,
+          }}>ALIBI AI</div>
+          <div style={{
+            fontFamily: "Georgia, serif",
+            fontSize: 11, color: C.white, lineHeight: 1.4,
+          }}>Click any skill tag<br/>to learn more ↓</div>
+          {/* Arrow */}
+          <div style={{
+            position: "absolute", bottom: -8, right: 16,
+            width: 0, height: 0,
+            borderLeft: "6px solid transparent",
+            borderRight: "6px solid transparent",
+            borderTop: `8px solid ${C.pink}`,
+          }} />
+        </div>
+      )}
       <button onClick={() => setOpen(o => !o)} style={{
         background: open ? C.black : C.pink,
         border: `3px solid ${C.black}`, width: 52, height: 52,
@@ -1294,8 +1382,15 @@ export default function Portfolio() {
         )}
         {activeTab === "PROJECTS" && <ProjectsPage />}
         {activeTab === "WORKFLOWS" && (
-          <div style={{ position:"fixed", top:48, left:0, right:0, bottom:0, zIndex:10 }}>
-            <iframe src="https://elialabi-eli-portfol-0wpb.bolt.host/workflows.html" style={{ width:"100%", height:"100%", border:"none" }} title="AI Workflows"/>
+          <div style={{ position:"fixed", top:48, left:0, right:0, bottom:0, zIndex:10, display:"flex", flexDirection:"column" }}>
+            <div style={{ background:C.black, borderBottom:`2px solid ${C.yellow}33`, padding:"10px 32px", display:"flex", alignItems:"center", justifyContent:"space-between", flexShrink:0 }}>
+              <div>
+                <div style={{ fontFamily:"'Courier New',monospace", fontSize:8, color:C.yellow, letterSpacing:"0.2em", opacity:0.7, marginBottom:3 }}>BUILT BY ELIZABETH ALABI</div>
+                <div style={{ fontFamily:"Georgia,serif", fontSize:15, fontWeight:900, color:C.white }}>AI Workflows — 10 systems I built and automated</div>
+              </div>
+              <div style={{ fontFamily:"'Courier New',monospace", fontSize:9, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em" }}>Click any diagram · Arrow keys to slide</div>
+            </div>
+            <iframe src="https://elialabi-eli-portfol-0wpb.bolt.host/workflows.html" style={{ flex:1, border:"none", width:"100%" }} title="AI Workflows"/>
           </div>
         )}
         {activeTab === "WRITING" && (
@@ -1878,97 +1973,55 @@ function SlidingCard({ project, accent, bg, onOpen }) {
 }
 
 // ─── Projects Page ────────────────────────────────────────────────────────────
-function ProjectsPage() {
-  const [openDemo, setOpenDemo] = useState(null);
+const BASE = "https://elialabi-eli-portfol-0wpb.bolt.host";
 
-  const DEMOS = [
-    {
-      id: "alibi",
-      name: "Alibi AI QA System",
-      sector: "AI Studio · Retail · Quality Assurance",
-      desc: "Automated QA pipeline for a live retail AI agent. Playwright drives a real browser, the AI evaluates responses against 11 brand rules, results logged, Jira auto-updated. Includes live CMS for fixing violations.",
-      tags: ["Python", "Claude", "Playwright", "Jira"],
-      accent: C.yellow,
-      file: "alibi_qa_dashboard.html",
-      metric: "34% → 85%",
-      metricLabel: "pass rate",
-    },
-    {
-      id: "writerstrike",
-      name: "WriterStrike",
-      sector: "MSc Thesis · University of the Arts London",
-      desc: "AI model evaluation tool built for my MSc thesis during the 2023 WGA writers strike. Structured comparison of GPT-4 and Copilot across quality, safety, and copyright risk dimensions.",
-      tags: ["GPT-4", "Model Evaluation", "A/B Testing", "Responsible AI"],
-      accent: C.pink,
-      file: "writerstrike_preview.html",
-      metric: "🏆",
-      metricLabel: "Award nominated",
-    },
-    {
-      id: "riffle",
-      name: "Riffle — Eddy",
-      sector: "Hackathon · Google Cloud Rapid Agent",
-      desc: "Adaptive KS3 Computing platform. Students hit 'I'm stuck' and type their confusion in their own words. Eddy reframes the explanation. Teachers see the exact words in a live dashboard — not just a score.",
-      tags: ["React", "Gemini", "MongoDB", "Node.js"],
-      accent: "#06D6A0",
-      file: "RiffleDemo.html",
-      metric: "Solo",
-      metricLabel: "full stack build",
-    },
-  ];
+const DEMOS = [
+  { name:"Alibi AI — QA System",   sector:"AI Studio · Retail · Live Commercial Deployment", file:`${BASE}/alibi_qa_dashboard.html`,     accent:C.yellow },
+  { name:"WriterStrike",            sector:"MSc Thesis · University of the Arts London",       file:`${BASE}/writerstrike_preview.html`,  accent:C.pink },
+  { name:"Riffle — Eddy",          sector:"Hackathon · Google Cloud Rapid Agent",             file:`${BASE}/RiffleDemo.html`,            accent:"#06D6A0" },
+];
+
+function ProjectsPage() {
+  const [current, setCurrent] = useState(0);
+  const demo = DEMOS[current];
 
   return (
-    <div style={{ background: C.paper, minHeight: "100vh", padding: "60px 56px" }}>
-      <div style={{ marginBottom: 48 }}>
-        <div style={{ fontFamily: "'Courier New', monospace", fontSize: 9, color: C.yellow, letterSpacing: "0.3em", marginBottom: 12, opacity: 0.7 }}>PERSONAL PROJECTS</div>
-        <div style={{ fontFamily: "Georgia, serif", fontSize: "clamp(24px,4vw,48px)", fontWeight: 900, color: C.black, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
-          Built outside work.<br/>Built to prove something.
+    <div style={{
+      position:"fixed", top:48, left:0, right:0, bottom:0,
+      background:C.black, display:"flex", flexDirection:"column", zIndex:10,
+    }}>
+      {/* Tab strip */}
+      <div style={{
+        background:C.black, borderBottom:`2px solid ${demo.accent}33`,
+        padding:"0 32px", display:"flex", alignItems:"center",
+        justifyContent:"space-between", height:44, flexShrink:0,
+      }}>
+        <div style={{ display:"flex" }}>
+          {DEMOS.map((d,i) => (
+            <button key={i} onClick={() => setCurrent(i)} style={{
+              fontFamily:"'Courier New',monospace", fontSize:9, letterSpacing:"0.15em",
+              textTransform:"uppercase", padding:"0 20px", height:44, border:"none",
+              borderBottom:`2px solid ${i===current?d.accent:"transparent"}`,
+              background:"transparent",
+              color:i===current?d.accent:"rgba(255,255,255,0.3)",
+              cursor:"pointer", transition:"all 0.2s",
+            }}>{d.name}</button>
+          ))}
+        </div>
+        <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+          <button onClick={() => setCurrent(c => Math.max(0,c-1))} disabled={current===0}
+            style={{ background:"none", border:"1px solid rgba(255,255,255,0.2)", color:"white", width:28, height:28, cursor:"pointer", opacity:current===0?0.2:0.7, fontSize:11 }}>←</button>
+          <button onClick={() => setCurrent(c => Math.min(DEMOS.length-1,c+1))} disabled={current===DEMOS.length-1}
+            style={{ background:"none", border:"1px solid rgba(255,255,255,0.2)", color:"white", width:28, height:28, cursor:"pointer", opacity:current===DEMOS.length-1?0.2:0.7, fontSize:11 }}>→</button>
+          <span style={{ fontFamily:"'Courier New',monospace", fontSize:9, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em" }}>
+            {String(current+1).padStart(2,"0")} / {String(DEMOS.length).padStart(2,"0")}
+          </span>
         </div>
       </div>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-        {DEMOS.map(demo => (
-          <div key={demo.id} style={{
-            display: "grid", gridTemplateColumns: "1fr auto",
-            border: `2px solid ${demo.accent}44`,
-            background: "white",
-            padding: "28px 32px",
-            gap: 32, alignItems: "center",
-            transition: "border-color 0.2s, box-shadow 0.2s",
-          }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = demo.accent; e.currentTarget.style.boxShadow = `5px 5px 0 ${demo.accent}44`; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = `${demo.accent}44`; e.currentTarget.style.boxShadow = "none"; }}
-          >
-            <div>
-              <div style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: demo.accent, letterSpacing: "0.2em", marginBottom: 8, opacity: 0.8 }}>{demo.sector}</div>
-              <div style={{ fontFamily: "Georgia, serif", fontSize: 22, fontWeight: 900, color: C.black, marginBottom: 10, letterSpacing: "-0.01em" }}>{demo.name}</div>
-              <div style={{ fontFamily: "Georgia, serif", fontSize: 13, color: C.black, opacity: 0.6, lineHeight: 1.75, marginBottom: 14, maxWidth: 560 }}>{demo.desc}</div>
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                {demo.tags.map(t => (
-                  <span key={t} style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: demo.accent, border: `1px solid ${demo.accent}44`, padding: "3px 8px" }}>{t}</span>
-                ))}
-              </div>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 16, flexShrink: 0 }}>
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontFamily: "Georgia, serif", fontSize: 36, fontWeight: 900, color: demo.accent, lineHeight: 1 }}>{demo.metric}</div>
-                <div style={{ fontFamily: "'Courier New', monospace", fontSize: 8, color: C.black, opacity: 0.4, letterSpacing: "0.12em" }}>{demo.metricLabel}</div>
-              </div>
-              <button
-                onClick={() => window.open(demo.file, '_blank')}
-                style={{
-                  background: demo.accent, color: C.black,
-                  border: "none", padding: "10px 22px",
-                  fontFamily: "'Courier New', monospace",
-                  fontSize: 10, letterSpacing: "0.15em",
-                  cursor: "pointer", fontWeight: "bold",
-                  whiteSpace: "nowrap",
-                }}
-              >OPEN DEMO →</button>
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* Full iframe */}
+      <iframe key={demo.file} src={demo.file}
+        style={{ flex:1, border:"none", width:"100%", display:"block" }}
+        title={demo.name} />
     </div>
   );
 }
