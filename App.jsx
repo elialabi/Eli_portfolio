@@ -1386,11 +1386,11 @@ export default function Portfolio() {
             <div style={{ background:C.black, borderBottom:`2px solid ${C.yellow}33`, padding:"10px 32px", display:"flex", alignItems:"center", justifyContent:"space-between", flexShrink:0 }}>
               <div>
                 <div style={{ fontFamily:"'Courier New',monospace", fontSize:8, color:C.yellow, letterSpacing:"0.2em", opacity:0.7, marginBottom:3 }}>BUILT BY ELIZABETH ALABI</div>
-                <div style={{ fontFamily:"Georgia,serif", fontSize:15, fontWeight:900, color:C.white }}>AI Workflows — 10 systems I built and automated</div>
+                <div style={{ fontFamily:"Georgia,serif", fontSize:15, fontWeight:900, color:C.white }}>AI Workflows systems I built and automated</div>
               </div>
               <div style={{ fontFamily:"'Courier New',monospace", fontSize:9, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em" }}>Click any diagram · Arrow keys to slide</div>
             </div>
-            <iframe src="https://elialabi-eli-portfol-0wpb.bolt.host/workflows.html" style={{ flex:1, border:"none", width:"100%" }} title="AI Workflows"/>
+            <iframe src="/workflows.html" style={{ flex:1, border:"none", width:"100%" }} title="AI Workflows"/>
           </div>
         )}
         {activeTab === "WRITING" && (
@@ -1973,12 +1973,34 @@ function SlidingCard({ project, accent, bg, onOpen }) {
 }
 
 // ─── Projects Page ────────────────────────────────────────────────────────────
-const BASE = "https://elialabi-eli-portfol-0wpb.bolt.host";
-
 const DEMOS = [
-  { name:"Alibi AI — QA System",   sector:"AI Studio · Retail · Live Commercial Deployment", file:`${BASE}/alibi_qa_dashboard.html`,     accent:C.yellow },
-  { name:"WriterStrike",            sector:"MSc Thesis · University of the Arts London",       file:`${BASE}/writerstrike_preview.html`,  accent:C.pink },
-  { name:"Riffle — Eddy",          sector:"Hackathon · Google Cloud Rapid Agent",             file:`${BASE}/RiffleDemo.html`,            accent:"#06D6A0" },
+  {
+    name: "Alibi AI — QA System",
+    sector: "AI Studio · Retail · Live Commercial Deployment",
+    file: "/alibi_qa_dashboard.html",
+    accent: C.yellow,
+    desc: "Automated QA pipeline for a live retail AI agent. Playwright drives a real browser, an AI agent evaluates responses against 11 brand rules, results are logged automatically and Jira tickets auto-commented. Includes a live CMS for routing and fixing violations.",
+    tags: ["Python", "Claude", "Playwright", "Jira", "Google Sheets"],
+    metric: "34% → 85% pass rate",
+  },
+  {
+    name: "WriterStrike",
+    sector: "MSc Thesis · University of the Arts London · Award Nominated",
+    file: "/writerstrike_preview.html",
+    accent: C.pink,
+    desc: "AI model evaluation tool built during the 2023 WGA writers strike. Structured A/B comparison of GPT-4 and Copilot across output quality, safety, and copyright risk. Developed a dual feedback loop evaluation methodology.",
+    tags: ["GPT-4", "Model Evaluation", "A/B Testing", "Responsible AI"],
+    metric: "🏆 Award nominated",
+  },
+  {
+    name: "Riffle — Eddy",
+    sector: "Hackathon · Google Cloud Rapid Agent · 2026",
+    file: "/RiffleDemo.html",
+    accent: "#06D6A0",
+    desc: "Adaptive KS3 Computing platform. Students hit 'I'm stuck' and type their confusion in their own words. Eddy reframes the explanation around their specific gap. Teacher dashboard shows exact student words — not just a score.",
+    tags: ["React", "Gemini 2.5 Flash", "MongoDB", "Node.js"],
+    metric: "Solo full-stack build",
+  },
 ];
 
 function ProjectsPage() {
@@ -1992,7 +2014,7 @@ function ProjectsPage() {
     }}>
       {/* Tab strip */}
       <div style={{
-        background:C.black, borderBottom:`2px solid ${demo.accent}33`,
+        background:C.black, borderBottom:`1px solid rgba(255,255,255,0.08)`,
         padding:"0 32px", display:"flex", alignItems:"center",
         justifyContent:"space-between", height:44, flexShrink:0,
       }}>
@@ -2018,7 +2040,30 @@ function ProjectsPage() {
           </span>
         </div>
       </div>
-      {/* Full iframe */}
+
+      {/* Description strip */}
+      <div style={{
+        background: C.black,
+        borderBottom: `2px solid ${demo.accent}`,
+        padding: "12px 32px",
+        display: "flex", alignItems: "center", gap: 32,
+        flexShrink: 0,
+      }}>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontFamily:"'Courier New',monospace", fontSize:8, color:demo.accent, letterSpacing:"0.2em", marginBottom:4, opacity:0.8 }}>{demo.sector}</div>
+          <div style={{ fontFamily:"Georgia,serif", fontSize:13, color:C.white, lineHeight:1.6, opacity:0.75, maxWidth:600 }}>{demo.desc}</div>
+        </div>
+        <div style={{ flexShrink:0, textAlign:"right" }}>
+          <div style={{ fontFamily:"'Courier New',monospace", fontSize:9, color:demo.accent, letterSpacing:"0.1em", marginBottom:6 }}>{demo.metric}</div>
+          <div style={{ display:"flex", gap:5, flexWrap:"wrap", justifyContent:"flex-end" }}>
+            {demo.tags.map(t => (
+              <span key={t} style={{ fontFamily:"'Courier New',monospace", fontSize:7, color:demo.accent, border:`1px solid ${demo.accent}44`, padding:"2px 8px" }}>{t}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Full iframe — relative path so no duplicate nav */}
       <iframe key={demo.file} src={demo.file}
         style={{ flex:1, border:"none", width:"100%", display:"block" }}
         title={demo.name} />
