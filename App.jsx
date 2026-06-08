@@ -57,7 +57,7 @@ const TIMELINE = [
     body: "Live AI agents in real commercial environments. Four clients simultaneously. I do QA, prompt engineering, automation pipelines, tool evaluation, and weekly briefings. I build the systems that make AI usable, not just possible.",
     skills: ["Prompt engineering", "QA frameworks", "Playwright", "Python", "Anthropic API", "Zapier", "Google Apps Script", "Agent deployment"],
     bg: C.black, accent: C.yellow, imgColor: C.yellow, pattern: "terminal",
-    org: "Cyphr Studio", orgType: "AI Operations Coordinator", years: "2024 — Present",
+    org: "Cyphr Studio", orgType: "AI Operations Coordinator", years: "2026 — Present",
   },
   {
     id: "06",
