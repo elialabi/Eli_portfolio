@@ -85,9 +85,14 @@ const ALL_SKILLS = [
 
 
 function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const check = () => {
+    const byWidth = window.innerWidth < 768;
+    const byAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    return byWidth || byAgent;
+  };
+  const [isMobile, setIsMobile] = useState(check);
   useEffect(() => {
-    const handler = () => setIsMobile(window.innerWidth < 768);
+    const handler = () => setIsMobile(check());
     window.addEventListener('resize', handler);
     return () => window.removeEventListener('resize', handler);
   }, []);
